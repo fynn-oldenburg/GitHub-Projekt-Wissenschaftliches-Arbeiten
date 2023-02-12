@@ -6,4 +6,4 @@ Gruppenmitglieder: Danilo Leonel, Jonas Molsbeck, Fynn Oldenburg, Philipp Schult
 
 ## Anforderungen
 
-![](images/analysis.png)
+![](./images/anforderungen.png)
