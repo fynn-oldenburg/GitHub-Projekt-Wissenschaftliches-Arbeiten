@@ -25,5 +25,5 @@ categorize_ordinal <- function (data, by=data[,1], bins=4) {
 y <- data.frame(rnorm(100, 25, 2))
 categorize_ordinal(y)
 
-# TODO bug
+
 ?categorize_ordinal()
