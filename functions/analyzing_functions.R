@@ -27,3 +27,33 @@ categorize_ordinal(y)
 
 
 ?categorize_ordinal()
+
+
+
+stats_metric <- function (x) {
+  #' calculate descriptive statistics for metric variables
+  #'
+  #' @param x Ein Data Frame
+
+  
+  # exceptions
+  if (any(class(x) != 'data.frame')) {
+    stop('x has to be a data.frame')
+  }
+  
+  
+  # functionality
+  y = unlist(x)
+  
+  result = data.frame("Anzahl" = length(y), "Mittelwert" = mean(y), "Standardabweichung" = sd(y), 
+                      "Minimum" = min(y), "Maximum" = max(y))
+  
+  return(result)
+}
+
+# usage example
+y <- data.frame(rnorm(100, 25, 2))
+stats_metric(y)
+
+
+?stats_metric
