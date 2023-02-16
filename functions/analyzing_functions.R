@@ -58,3 +58,8 @@ stats_metric(y)
 
 
 ?stats_metric
+
+
+stats_categorical <- function (x) {
+    # TODO
+}
