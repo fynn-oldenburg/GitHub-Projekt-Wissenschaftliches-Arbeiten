@@ -2,6 +2,7 @@
 ## Anzahl Studierende
 n <- 100 
 
+
 data <- data.frame(
   
   ## Alter 
@@ -9,7 +10,7 @@ data <- data.frame(
   
   ## Studienfach
 
-  
+   
   ## Interesse an Mathematik
   
   
