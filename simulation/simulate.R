@@ -1,6 +1,6 @@
 
 ## Anzahl Studierende
-n <- 100 
+n <- 100
 
 data <- data.frame(
   
@@ -8,7 +8,7 @@ data <- data.frame(
   "Alter" = floor(rnorm(n, 25, 2)),
   
   ## Studienfach
-  
+  "Studienfach"
   
   ## Interesse an Mathematik
   
