@@ -3,12 +3,12 @@
 n <- 100
 
 ## Studienfach
-
-studienfach <- sample(c("Statistik","Data Science","Mathe","Informatik"),
-                      size=n,
-                      prob=c(.35,.35,.1,.2),
-                      replace=TRUE)
-
+set.seed(123) 
+studienfach <- sample(c("Statistik", "Data Science", "Mathe", "Informatik"),
+                      size = n,
+                      prob = c(.35, .35, .1, .2),
+                      replace = TRUE
+                      )
 
 data <- data.frame(
   
