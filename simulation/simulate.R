@@ -41,6 +41,11 @@ mathe.interesse <- interesse(pobStat = c(0, .05, .075, .1, .175, .35, .25),
 
 
 ## Interesse an Programmieren
+prog.interesse <- interesse(pobStat = c(0.02, 0.05, 0.15, 0.25, 0.35, 0.15, 0.03), 
+                             probDS = c(0.02, 0.05, 0.15, 0.25, 0.35, 0.15, 0.03), 
+                             probMath = c(0.05, 0.1, 0.2, 0.3, 0.25, 0.08, 0.02), 
+                             probInfo = c(0.05, 0.1, 0.2, 0.3, 0.25, 0.08, 0.02),
+                             seed = seed)
 
 
 data <- data.frame(
@@ -52,11 +57,10 @@ data <- data.frame(
   "Studienfach" = studienfach,
   
   ## Interesse an Mathematik
-  "Mathe" = mathe.interesse
-  
-  
+  "Mathe" = mathe.interesse,
+   
   ## Interesse an Programmieren
-  
+  "Programmieren" = prog.interesse
   
   ## Mathe-LK (ja/nein)
   
