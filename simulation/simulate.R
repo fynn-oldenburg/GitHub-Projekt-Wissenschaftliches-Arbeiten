@@ -2,7 +2,7 @@ library(docstring)
 
 ## Parameter
 n <- 100    ## Anzahl Studierende
-seed <- 17  ## Reproduzierbarkeit
+seed <- 23  ## Reproduzierbarkeit
 
 
 ## Studienfach
@@ -61,7 +61,8 @@ prog.interesse <- interesse(pobStat = c(.03, .05, .12, .25, .35, .15, .05),
 
 
 ## Mathe LK
-prob.interesse <- function(i, probMatheLK) {
+prob.interesse <- function(i, probMatheLK, seed) {
+  set.seed(seed)
   if (mathe.interesse[i] > 4){
     probMatheLK <- probMatheLK + .2
   }
@@ -75,19 +76,19 @@ mathe.LK <- c()
 for (i in 1:n){
   if (studienfach[i] == "Statistik") {
     probMatheLK <- .6 
-    mathe.LK[i] <- prob.interesse(i, probMatheLK)
+    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
     
   } else if (studienfach[i] == "Data Science") {
     probMatheLK <- .5 
-    mathe.LK[i] <- prob.interesse(i, probMatheLK)
+    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
     
   } else if (studienfach[i] == "Mathe") {
     probMatheLK <- .7
-    mathe.LK[i] <- prob.interesse(i, probMatheLK)
+    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
     
   } else { ##Informatik
     probMatheLK <- .5
-    mathe.LK[i] <- prob.interesse(i, probMatheLK)
+    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
   }
 }
 
