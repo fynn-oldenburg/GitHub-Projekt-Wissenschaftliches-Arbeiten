@@ -2,7 +2,10 @@
 
 Gruppe: 10
 
-Gruppenmitglieder: Danilo Leonel, Jonas Molsbeck, Fynn Oldenburg, Philipp Schulte-Loh, Dylan Wagner
+Gruppenmitglieder:
+
+  - Aufgabe 1: Danilo Leonel, Jonas Molsbeck 
+  - Aufagbe 4: Fynn Oldenburg, Philipp Schulte-Loh, Dylan Wagner
 
 ## Anforderungen
 
