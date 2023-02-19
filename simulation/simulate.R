@@ -32,7 +32,7 @@ interesse <- function(pobStat, probDS, probMath, probInfo, seed) {
       sample(1:7, size = 1, prob = probDS)
     } else if (x == "Mathe") {
       sample(1:7, size = 1, prob = probMath)
-    } else { 
+    } else {
       sample(1:7, size = 1, prob = probInfo)
     }
   })
@@ -43,19 +43,19 @@ interesse <- function(pobStat, probDS, probMath, probInfo, seed) {
 
 
 ## Interesse an Mathematik
-mathe.interesse <- interesse(pobStat = c(0, .05, .075, .1, .175, .35, .25), 
-                             probDS = c(.05, .05, .1, .2, .3, .2, .1), 
-                             probMath = c(0, 0, 0, 0, .2, .3, .5), 
+mathe.interesse <- interesse(pobStat = c(.01, .05, .09, .15, .2, .3, .2), 
+                             probDS = c(.05, .1, .15, .25, .25, .1, .1), 
+                             probMath = c(0, 0, 0, .02, .18, .3, .5), 
                              probInfo = c(.05, .05, .2, .2, .3, .1, .1),
                              seed = seed
                              )
 
 
 ## Interesse an Programmieren
-prog.interesse <- interesse(pobStat = c(0.02, 0.05, 0.15, 0.25, 0.35, 0.15, 0.03), 
-                            probDS = c(0.02, 0.05, 0.15, 0.25, 0.35, 0.15, 0.03), 
-                            probMath = c(0.05, 0.1, 0.2, 0.3, 0.25, 0.08, 0.02), 
-                            probInfo = c(0.05, 0.1, 0.2, 0.3, 0.25, 0.08, 0.02),
+prog.interesse <- interesse(pobStat = c(.03, .05, .12, .25, .35, .15, .05), 
+                            probDS = c(.01, .02, .05, .1, .3, .32, .2), 
+                            probMath = c(.05, .05, .2, .3, .2, .15, .05), 
+                            probInfo = c(.01, .01, .05, .13, .2, .35, .25),
                             seed = seed
                             )
 
