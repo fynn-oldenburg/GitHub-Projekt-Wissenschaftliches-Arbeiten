@@ -63,3 +63,42 @@ stats_metric(y)
 stats_categorical <- function (x) {
     # TODO
 }
+
+
+## (c) Funktion für deskriptive bivariate Statistiken für zwei kategoriale Variablen
+
+bivariate_stats_categorical <- function(data, x_var, y_var) {
+  
+  # Fehler bei der Suche für x_var und y_var
+  if (!(x_var %in% names(data))) {
+    stop("x_var ist nicht in data")
+  }
+  if (!(y_var %in% names(data))) {
+    stop("y_var ist nicht in data")
+  }
+  
+  # Kontingenztabelle erstellen
+  contingency_table <- table(data[[x_var]], data[[y_var]])
+  
+  # Hinzufügt Zeilen- und Spaltensummen in der Kontingenztabelle
+  contingency_table <- addmargins(contingency_table)
+  
+  # Berechnung Zeilen- und Spaltenprozentsätze
+  row_percents <- prop.table(contingency_table, margin = 1) * 100
+  col_percents <- prop.table(contingency_table, margin = 2) * 100
+  
+  # Ergebnisse in einer Liste
+  result <- list(contingency_table = contingency_table,
+                 row_percents = row_percents,
+                 col_percents = col_percents)
+  return(result)
+}
+
+## Deskriptive bivariate Statistiken für zwei kategoriale Variablen
+## Beispiel:
+## bivariate_stats_categorical(data, "Studienfach", "Mathe-LK (ja/nein)")
+
+
+
+
+
