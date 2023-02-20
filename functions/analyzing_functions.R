@@ -12,9 +12,9 @@ test.data <- data.frame(
 categorize_ordinal <- function (data, by=1, bins=3) {
     #' categorize ordinal variables based on quantiles
     #'
-    #' @param data Ein Data Frame
-    #' @param by eine mindestens ordinale Variable des Datensatzes, nach der kategorisiert werden soll
-    #' @param bins Anzahl der Kategorien
+    #' @param data data.frame
+    #' @param by int/string/vector - mindestens ordinale Variable(n) des Datensatzes, nach denen kategorisiert werden soll
+    #' @param bins int - Anzahl der Kategorien
 
     # exceptions
     if (!any(class(data) == 'data.frame')) {
