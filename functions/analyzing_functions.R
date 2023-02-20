@@ -9,7 +9,7 @@ test.data <- data.frame(
 )
 
 
-categorize_ordinal <- function (data, by=1, bins=3) {
+categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
     #' categorize ordinal variables based on quantiles
     #'
     #' @param data data.frame
@@ -26,24 +26,37 @@ categorize_ordinal <- function (data, by=1, bins=3) {
     }
 
     # functionality
+    if (bins == 3 && in_place == TRUE) {
+        return(mutate(data, across(by,
+                                   ~ recode(ntile(.x, bins),
+                                            '1' = 'low',
+                                            '2' = 'medium',
+                                            '3' = 'high'))))
+    }
 
-    if (bins == 3) {
+    if (bins != 3 && in_place == TRUE) {
+        return(mutate(data, across(by,
+                                   ~ ntile(.x, bins))))
+    }
+
+    if (bins == 3 && in_place == FALSE) {
         return(mutate(data, across(by,
                             ~ recode(ntile(.x, bins),
                                      '1' = 'low',
                                      '2' = 'medium',
                                      '3' = 'high'),
-                            .names = "category_{.col}")))
+                            .names = 'category_{.col}')))
     }
 
     return(mutate(data, across(by,
                         ~ ntile(.x, bins),
-                        .names = "category_{.col}")))
-
-    # usage example
-    # categorize_ordinal(test.data, c(1,3), bins=5)
-    # categorize_ordinal(test.data, c('one', 'two'))
+                        .names = 'category_{.col}')))
 }
+
+## usage example
+# categorize_ordinal(test.data, c(1,3), bins=5)
+# categorize_ordinal(test.data, c('one', 'two'))
+
 
 
 stats_metric <- function (x) {
