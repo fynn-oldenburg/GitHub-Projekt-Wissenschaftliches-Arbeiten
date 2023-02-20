@@ -15,6 +15,7 @@ categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
     #' @param data data.frame
     #' @param by int/string/vector - mindestens ordinale Variable(n) des Datensatzes, nach denen kategorisiert werden soll
     #' @param bins int - Anzahl der Kategorien
+    #' @param in_place bool - Wenn TRUE werden die Originalwerte der Variable(n) mit den errechneten Kategorien überschrieben
 
     # exceptions
     if (!any(class(data) == 'data.frame')) {
