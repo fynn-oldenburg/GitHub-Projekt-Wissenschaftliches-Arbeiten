@@ -1,7 +1,15 @@
 library(tidyverse)
 library(docstring)
 
-categorize_ordinal <- function (data, by=data[,1], bins=4) {
+
+test.data <- data.frame(
+    "one" = rnorm(10),
+    "two" = rnorm(10, 50, 2),
+    "three" = rnorm(10, 10, 7)
+)
+
+
+categorize_ordinal <- function (data, by=1, bins=3) {
     #' categorize ordinal variables based on quantiles
     #'
     #' @param data Ein Data Frame
@@ -18,16 +26,11 @@ categorize_ordinal <- function (data, by=data[,1], bins=4) {
     }
 
     # functionality
-    return(mutate(data, category = ntile(by, bins)))
+    return(mutate(data, across(by, ~ ntile(.x, bins), .names = "category_{.col}")))
 }
 
 # usage example
-y <- data.frame(rnorm(100, 25, 2))
-categorize_ordinal(y)
-
-
-?categorize_ordinal()
-
+# categorize_ordinal(test.data, c(1,3), bins=5)
 
 
 stats_metric <- function (x) {
@@ -52,14 +55,7 @@ stats_metric <- function (x) {
   return(result)
 }
 
-# usage example
-y <- data.frame(rnorm(100, 25, 2))
-stats_metric(y)
 
-
-?stats_metric
-
-
-stats_categorical <- function (x) {
+stats_categorical <- function (data) {
     # TODO
 }
