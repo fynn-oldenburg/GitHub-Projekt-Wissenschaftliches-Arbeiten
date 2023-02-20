@@ -27,7 +27,7 @@ categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
     }
 
     # functionality
-    if (bins == 3 && in_place == TRUE) {
+    if (in_place == TRUE && bins == 3) {
         return(mutate(data, across(by,
                                    ~ recode(ntile(.x, bins),
                                             '1' = 'low',
@@ -35,12 +35,12 @@ categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
                                             '3' = 'high'))))
     }
 
-    if (bins != 3 && in_place == TRUE) {
+    if (in_place == TRUE && bins != 3) {
         return(mutate(data, across(by,
                                    ~ ntile(.x, bins))))
     }
 
-    if (bins == 3 && in_place == FALSE) {
+    if (bins == 3) {
         return(mutate(data, across(by,
                             ~ recode(ntile(.x, bins),
                                      '1' = 'low',
