@@ -66,7 +66,6 @@ stats_categorical <- function (x) {
 
 
 ## (c) Funktion für deskriptive bivariate Statistiken für zwei kategoriale Variablen
-
 bivariate_stats_categorical <- function(data, x_var, y_var) {
   
   # Fehler bei der Suche für x_var und y_var
@@ -80,19 +79,48 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   # Kontingenztabelle erstellen
   contingency_table <- table(data[[x_var]], data[[y_var]])
 
-  # Hinzufügt Zeilen- und Spaltensummen in der Kontingenztabelle
-  contingency_table <- addmargins(contingency_table)
-
-  # Berechnung Zeilen- und Spaltenprozentsätze
+  # Zeilen- und Spaltenprozentsätze berechnen
   row_percents <- prop.table(contingency_table, margin = 1) * 100
   col_percents <- prop.table(contingency_table, margin = 2) * 100
+
+  # Berechnung der Chi-Squared-Statistik und des p-Werts
+  chisq <- chisq.test(contingency_table)$statistic
+  p_value <- chisq.test(contingency_table)$p.value
+
+  # Berechnung Phi-Koeffizient
+  phi <- sqrt(chisq / sum(contingency_table))
+
+  # Berechnung Cramer's V
+  n <- sum(contingency_table)
+  rows <- nrow(contingency_table)
+  cols <- ncol(contingency_table)
+  cramer_v <- sqrt(chisq / (n * (min(rows, cols) - 1)))
+
+  # Berechnung des Kontingenzkoeffizienten
+  contingency_coefficient <- sqrt(chisq / (chisq + n))
+
+  # Berechnung von Fisher's Exact Test und Odds Ratio (falls die Tabelle 2x2 ist)
+  fisher_test <- NULL
+  odds_ratio <- NULL
+  if (rows == 2 && cols == 2) {
+    fisher_test <- fisher.test(contingency_table)
+    odds_ratio <- fisher_test$estimate
+  }
   
   # Ergebnisse in einer Liste
   result <- list(contingency_table = contingency_table,
                  row_percents = row_percents,
-                 col_percents = col_percents)
+                 col_percents = col_percents,
+                 chi_squared = chisq,
+                 p_value = p_value,
+                 phi = phi,
+                 cramer_v = cramer_v,
+                 contingency_coefficient = contingency_coefficient,
+                 fisher_test = fisher_test,
+                 odds_ratio = odds_ratio)
   return(result)
 }
+
 
 ## Deskriptive bivariate Statistiken für zwei kategoriale Variablen
 ## Beispiel:
