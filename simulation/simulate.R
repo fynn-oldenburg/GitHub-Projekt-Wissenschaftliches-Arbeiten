@@ -99,6 +99,9 @@ for (i in 1:n){
 set.seed(seed)
 data <- data.frame(
   
+  ## ID
+  "ID" = 1:n,
+  
   ## Alter 
   "Alter" = floor(rnorm(n, 25, 2)),
   
@@ -115,4 +118,4 @@ data <- data.frame(
   "MatheLK" = mathe.LK
   
 ) %>%
-  write.csv("students-data.csv")
+  write.csv("students-data.csv", row.names = FALSE)
