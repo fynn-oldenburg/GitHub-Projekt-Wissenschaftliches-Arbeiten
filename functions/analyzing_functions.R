@@ -39,11 +39,11 @@ categorize_ordinal <- function (data, by=1, bins=3) {
     return(mutate(data, across(by,
                         ~ ntile(.x, bins),
                         .names = "category_{.col}")))
-}
 
-# usage example
-# categorize_ordinal(test.data, c(1,3), bins=5)
-# categorize_ordinal(test.data, c('one', 'two'))
+    # usage example
+    # categorize_ordinal(test.data, c(1,3), bins=5)
+    # categorize_ordinal(test.data, c('one', 'two'))
+}
 
 
 stats_metric <- function (x) {
