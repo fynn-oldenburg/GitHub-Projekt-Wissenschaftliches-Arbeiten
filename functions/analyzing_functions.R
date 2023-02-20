@@ -37,8 +37,8 @@ categorize_ordinal <- function (data, by=1, bins=3) {
     }
 
     return(mutate(data, across(by,
-                               ~ ntile(.x, bins),
-                               .names = "category_{.col}")))
+                        ~ ntile(.x, bins),
+                        .names = "category_{.col}")))
 }
 
 # usage example
