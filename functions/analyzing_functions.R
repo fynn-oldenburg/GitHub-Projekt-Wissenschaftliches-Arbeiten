@@ -19,7 +19,7 @@ categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
 
     # exceptions
     if (!any(class(data) == 'data.frame')) {
-        stop('x has to be a data.frame')
+        stop('data should be a data.frame')
     }
 
     if (bins <= 0) {
