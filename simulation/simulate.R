@@ -1,8 +1,9 @@
 library(docstring)
+library(dplyr)
 
 ## Parameter
 n <- 100    ## Anzahl Studierende
-seed <- 17  ## Reproduzierbarkeit
+seed <- 23  ## Reproduzierbarkeit
 
 
 ## Studienfach
@@ -59,6 +60,42 @@ prog.interesse <- interesse(pobStat = c(.03, .05, .12, .25, .35, .15, .05),
                             seed = seed
                             )
 
+
+## Mathe LK
+prob.interesse <- function(i, probMatheLK, seed) {
+  set.seed(seed)
+  if (mathe.interesse[i] > 4){
+    probMatheLK <- probMatheLK + .2
+  }
+  if (prog.interesse[i] > 4) {
+    probMatheLK <- probMatheLK + .05
+  }
+  return(sample(c("ja", "nein"), size = 1, prob = c(probMatheLK, 1 - probMatheLK)))
+}
+
+mathe.LK <- c()
+for (i in 1:n){
+  if (studienfach[i] == "Statistik") {
+    probMatheLK <- .6 
+    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
+    
+  } else if (studienfach[i] == "Data Science") {
+    probMatheLK <- .5 
+    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
+    
+  } else if (studienfach[i] == "Mathe") {
+    probMatheLK <- .7
+    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
+    
+  } else { ##Informatik
+    probMatheLK <- .5
+    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
+  }
+}
+
+
+
+
 set.seed(seed)
 data <- data.frame(
   
@@ -72,9 +109,10 @@ data <- data.frame(
   "Mathe" = mathe.interesse,
    
   ## Interesse an Programmieren
-  "Programmieren" = prog.interesse
+  "Programmieren" = prog.interesse,
   
   ## Mathe-LK (ja/nein)
+  "MatheLK" = mathe.LK
   
-  
-)
+) %>%
+  write.csv("students-data.csv")
