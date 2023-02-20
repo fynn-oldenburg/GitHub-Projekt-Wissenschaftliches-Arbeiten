@@ -57,6 +57,7 @@ categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
 ## usage example
 # categorize_ordinal(test.data, c(1,3), bins=5)
 # categorize_ordinal(test.data, c('one', 'two'))
+# TODO
 
 
 
