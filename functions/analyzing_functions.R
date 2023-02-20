@@ -26,7 +26,19 @@ categorize_ordinal <- function (data, by=1, bins=3) {
     }
 
     # functionality
-    return(mutate(data, across(by, ~ ntile(.x, bins), .names = "category_{.col}")))
+
+    if (bins == 3) {
+        return(mutate(data, across(by,
+                            ~ recode(ntile(.x, bins),
+                                     '1' = 'low',
+                                     '2' = 'medium',
+                                     '3' = 'high'),
+                            .names = "category_{.col}")))
+    }
+
+    return(mutate(data, across(by,
+                               ~ ntile(.x, bins),
+                               .names = "category_{.col}")))
 }
 
 # usage example
