@@ -1,4 +1,5 @@
 library(docstring)
+library(dplyr)
 
 ## Parameter
 n <- 100    ## Anzahl Studierende
@@ -113,4 +114,5 @@ data <- data.frame(
   ## Mathe-LK (ja/nein)
   "MatheLK" = mathe.LK
   
-)
+) %>%
+  write.csv("students-data.csv")
