@@ -76,13 +76,13 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   if (!(y_var %in% names(data))) {
     stop("y_var ist nicht in data")
   }
-  
+
   # Kontingenztabelle erstellen
   contingency_table <- table(data[[x_var]], data[[y_var]])
-  
+
   # Hinzufügt Zeilen- und Spaltensummen in der Kontingenztabelle
   contingency_table <- addmargins(contingency_table)
-  
+
   # Berechnung Zeilen- und Spaltenprozentsätze
   row_percents <- prop.table(contingency_table, margin = 1) * 100
   col_percents <- prop.table(contingency_table, margin = 2) * 100
@@ -98,7 +98,12 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
 ## Beispiel:
 ## bivariate_stats_categorical(data, "Studienfach", "Mathe-LK (ja/nein)")
 
+# usage test
 
+biv_data <- data.frame('x' = sample(c(1,2,3), 10, replace = TRUE),
+                       'y' = sample(c('one', 'two', 'three'), 10, replace = TRUE))
 
+bivariate_stats_categorical(biv_data, 'x', 'y')
 
+# Für row_- und col_percents addieren die Prozentsätze nicht zu 100
 
