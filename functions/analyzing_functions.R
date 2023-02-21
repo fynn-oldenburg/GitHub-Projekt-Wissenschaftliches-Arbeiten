@@ -1,3 +1,5 @@
+source("functions/helper_functions.R")
+
 library(tidyverse)
 library(docstring)
 
@@ -60,27 +62,27 @@ categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
 
 
 
-stats_metric <- function (x) {
+stats_metric <- function (data) {
   #' calculate descriptive statistics for metric variables
   #'
-  #' @param x Ein Data Frame
-
+  #' @param data Ein Data Frame mit metrisch-skalierten Spalten.
+  
   # exceptions
-  if (!any(class(x) == 'data.frame')) {
+  if (!any(class(data) == 'data.frame')) {
     stop('x has to be a data.frame')
   }
-
-  # functionality
-  y = unlist(x)
   
-  result = data.frame("Anzahl" = length(y),
-                      "Mittelwert" = mean(y),
-                      "Standardabweichung" = sd(y),
-                      "Minimum" = min(y),
-                      "Maximum" = max(y))
-  
+  list.tmp <- apply(data, 2, stats_metric.inner) 
+  result <- do.call(rbind.data.frame, list.tmp)
   return(result)
 }
+
+## example
+test.data %>% 
+  select(c("one", "three")) %>% 
+  stats_metric()
+
+
 
 
 stats_categorical <- function (data) {
