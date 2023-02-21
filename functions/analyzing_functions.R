@@ -67,6 +67,35 @@ stats_categorical <- function (x) {
 
 ## (c) Funktion für deskriptive bivariate Statistiken für zwei kategoriale Variablen
 bivariate_stats_categorical <- function(data, x_var, y_var) {
+  #' Funktion zur Berechnung von Bivariate Kategorialen Statistiken
+  #' 
+  #' Diese Funktion nimmt ein Datenrahmen und zwei kategoriale Variablen auf und gibt eine
+  #' Reihe von Statistiken zurück, die die Beziehung zwischen diesen beiden Variablen darstellen.
+  #' 
+  #' @param data Ein Datenrahmen, der die Variablen enthält.
+  #' @param x_var Der Name der ersten kategorialen Variable.
+  #' @param y_var Der Name der zweiten kategorialen Variable.
+  #' 
+  #' @return Eine Liste mit den folgenden Elementen:
+  #' \item{contingency_table}{Eine Kontingenztabelle der beiden Variablen.}
+  #' \item{row_percents}{Zeilenprozentsätze der Kontingenztabelle.}
+  #' \item{col_percents}{Spaltenprozentsätze der Kontingenztabelle.}
+  #' \item{chi_squared}{Die Chi-Quadrat-Statistik.}
+  #' \item{p_value}{Der p-Wert der Chi-Quadrat-Statistik.}
+  #' \item{phi}{Der Phi-Koeffizient.}
+  #' \item{cramer_v}{Der Cramér's V-Koeffizient.}
+  #' \item{contingency_coefficient}{Der Kontingenzkoeffizient.}
+  #' \item{fisher_test}{Der Ergebnis von Fisher's Exact Test, falls die Tabelle 2x2 ist.}
+  #' \item{odds_ratio}{Die Odds Ratio, falls die Tabelle 2x2 ist.}
+  #'
+  #' @examples
+  #' data(mtcars)
+  #' bivariate_stats_categorical(mtcars, "cyl", "vs")
+  #' 
+  #' @importFrom stats chisq.test fisher.test
+  #' @importFrom stats table prop.table
+  #' 
+  #' @export
   
   # Fehler bei der Suche für x_var und y_var
   if (!(x_var %in% names(data))) {
@@ -75,30 +104,30 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   if (!(y_var %in% names(data))) {
     stop("y_var ist nicht in data")
   }
-
+  
   # Kontingenztabelle erstellen
   contingency_table <- table(data[[x_var]], data[[y_var]])
-
+  
   # Zeilen- und Spaltenprozentsätze berechnen
   row_percents <- prop.table(contingency_table, margin = 1) * 100
   col_percents <- prop.table(contingency_table, margin = 2) * 100
-
+  
   # Berechnung der Chi-Squared-Statistik und des p-Werts
   chisq <- chisq.test(contingency_table)$statistic
   p_value <- chisq.test(contingency_table)$p.value
-
+  
   # Berechnung Phi-Koeffizient
   phi <- sqrt(chisq / sum(contingency_table))
-
+  
   # Berechnung Cramer's V
   n <- sum(contingency_table)
   rows <- nrow(contingency_table)
   cols <- ncol(contingency_table)
   cramer_v <- sqrt(chisq / (n * (min(rows, cols) - 1)))
-
+  
   # Berechnung des Kontingenzkoeffizienten
   contingency_coefficient <- sqrt(chisq / (chisq + n))
-
+  
   # Berechnung von Fisher's Exact Test und Odds Ratio (falls die Tabelle 2x2 ist)
   fisher_test <- NULL
   odds_ratio <- NULL
@@ -121,6 +150,8 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   return(result)
 }
 
+
+?bivariate_stats_categorical
 
 ## Deskriptive bivariate Statistiken für zwei kategoriale Variablen
 ## Beispiel:
