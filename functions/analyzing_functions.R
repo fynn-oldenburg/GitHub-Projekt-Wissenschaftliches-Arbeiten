@@ -64,6 +64,7 @@ stats_categorical <- function (x) {
     # TODO
 }
 
+source("helper_functions.R")
 
 ## (c) Funktion für deskriptive bivariate Statistiken für zwei kategoriale Variablen
 bivariate_stats_categorical <- function(data, x_var, y_var) {
@@ -120,10 +121,7 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   phi <- sqrt(chisq / sum(contingency_table))
   
   # Berechnung Cramer's V
-  n <- sum(contingency_table)
-  rows <- nrow(contingency_table)
-  cols <- ncol(contingency_table)
-  cramer_v <- sqrt(chisq / (n * (min(rows, cols) - 1)))
+  cramer_v <- cramer_v(contingency_table)
   
   # Berechnung des Kontingenzkoeffizienten
   contingency_coefficient <- sqrt(chisq / (chisq + n))
