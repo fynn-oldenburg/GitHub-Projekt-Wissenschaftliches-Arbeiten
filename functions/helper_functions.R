@@ -1,3 +1,6 @@
+library(tidyverse)
+library(docstring)
+
 
 cramer_v <- function(contingency_table) {
   #' calculate cramer's v
