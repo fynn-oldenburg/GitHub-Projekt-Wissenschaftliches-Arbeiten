@@ -89,40 +89,26 @@ stats_categorical <- function (data) {
     # TODO
 }
 
-## Cramer_v Funktion für kurze Zeit addiert
-cramer_v <- function(contingency_table) {
-  #' calculate cramer's v
-  #'
-  #' @param contingency_table die Kontingenztabelle
-  
-  # functionality
-  chisq <- chisq.test(contingency_table)$statistic
-  n <- sum(contingency_table)
-  rows <- nrow(contingency_table)
-  cols <- ncol(contingency_table)
-  
-  return(sqrt(chisq / (n * (min(rows, cols) - 1))))
-}
 
-## (c) Funktion fÃ¼r deskriptive bivariate Statistiken fÃ¼r zwei kategoriale Variablen
+## (c) Funktion für deskriptive bivariate Statistiken für zwei kategoriale Variablen
 bivariate_stats_categorical <- function(data, x_var, y_var) {
   #' Funktion zur Berechnung von Bivariate Kategorialen Statistiken
   #' 
   #' Diese Funktion nimmt ein Datenrahmen und zwei kategoriale Variablen auf und gibt eine
-  #' Reihe von Statistiken zurÃ¼ck, die die Beziehung zwischen diesen beiden Variablen darstellen.
+  #' Reihe von Statistiken zurück, die die Beziehung zwischen diesen beiden Variablen darstellen.
   #' 
-  #' @param data Ein Datenrahmen, der die Variablen enthÃ¤lt.
+  #' @param data Ein Datenrahmen, der die Variablen enthält.
   #' @param x_var Der Name der ersten kategorialen Variable.
   #' @param y_var Der Name der zweiten kategorialen Variable.
   #' 
   #' @return Eine Liste mit den folgenden Elementen:
   #' \item{contingency_table}{Eine Kontingenztabelle der beiden Variablen.}
-  #' \item{row_percents}{ZeilenprozentsÃ¤tze der Kontingenztabelle.}
-  #' \item{col_percents}{SpaltenprozentsÃ¤tze der Kontingenztabelle.}
+  #' \item{row_percents}{Zeilenprozentsätze der Kontingenztabelle.}
+  #' \item{col_percents}{Spaltenprozentsätze der Kontingenztabelle.}
   #' \item{chi_squared}{Die Chi-Quadrat-Statistik.}
   #' \item{p_value}{Der p-Wert der Chi-Quadrat-Statistik.}
   #' \item{phi}{Der Phi-Koeffizient.}
-  #' \item{cramer_v}{Der CramÃ©r's V-Koeffizient.}
+  #' \item{cramer_v}{Der Cramer's V-Koeffizient.}
   #' \item{contingency_coefficient}{Der Kontingenzkoeffizient.}
   #' \item{fisher_test}{Der Ergebnis von Fisher's Exact Test, falls die Tabelle 2x2 ist.}
   #' \item{odds_ratio}{Die Odds Ratio, falls die Tabelle 2x2 ist.}
@@ -136,7 +122,7 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   #' 
   #' @export
   
-  # Fehler bei der Suche fÃ¼r x_var und y_var
+  # Fehler bei der Suche für x_var und y_var
   if (!(x_var %in% names(data))) {
     stop("x_var ist nicht in data")
   }
@@ -147,7 +133,7 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   # Kontingenztabelle erstellen
   contingency_table <- table(data[[x_var]], data[[y_var]])
   
-  # Zeilen- und SpaltenprozentsÃ¤tze berechnen
+  # Zeilen- und Spaltenprozentsätze berechnen
   row_percents <- prop.table(contingency_table, margin = 1) * 100
   col_percents <- prop.table(contingency_table, margin = 2) * 100
   
@@ -159,8 +145,7 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   phi <- sqrt(chisq / sum(contingency_table))
   
   # Berechnung Cramer's V
-  #cramer_v <- helper_functions::cramer_v(contingency_table)
-  cramer_v <- cramer_v(contingency_table)
+  cramer_v <- helper_functions::cramer_v(contingency_table)
   
   # Berechnung des Kontingenzkoeffizienten
   contingency_coefficient <- sqrt(chisq / (chisq + n))
@@ -193,16 +178,17 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
 docstring(bivariate_stats_categorical)
 
 
-## Deskriptive bivariate Statistiken fÃ¼r zwei kategoriale Variablen
+## Deskriptive bivariate Statistiken für zwei kategoriale Variablen
 ## Beispiel:
 ## bivariate_stats_categorical(data, "Studienfach", "Mathe-LK (ja/nein)")
 
 # usage test
 
-biv_data <- data.frame('x' = sample(c(1,2,3), 10, replace = TRUE),
-                       'y' = sample(c('one', 'two', 'three'), 10, replace = TRUE))
+# biv_data <- data.frame('x' = sample(c(1,2,3), 10, replace = TRUE),
+#                        'y' = sample(c('one', 'two', 'three'), 10, replace = TRUE))
+# 
+# bivariate_stats_categorical(biv_data, 'x', 'y')
 
-bivariate_stats_categorical(biv_data, 'x', 'y')
-
-# FÃ¼r row_- und col_percents addieren die ProzentsÃ¤tze nicht zu 100
-
+# Für row_- und col_percents addieren die ProzentsÃ¤tze nicht zu 100
+data(mtcars)
+bivariate_stats_categorical(mtcars, "cyl", "vs")
