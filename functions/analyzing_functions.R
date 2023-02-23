@@ -1,4 +1,4 @@
-source("functions/helper_functions.R")
+source("helper_functions.R")
 
 library(tidyverse)
 library(docstring)
@@ -145,7 +145,10 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   phi <- sqrt(chisq / sum(contingency_table))
   
   # Berechnung Cramer's V
-  cramer_v <- helper_functions::cramer_v(contingency_table)
+  n <- sum(contingency_table)
+  rows <- nrow(contingency_table)
+  cols <- ncol(contingency_table)
+  cramer_v <- bivariate_stats_categorical.cramer_v(contingency_table, n, rows, cols)
   
   # Berechnung des Kontingenzkoeffizienten
   contingency_coefficient <- sqrt(chisq / (chisq + n))
