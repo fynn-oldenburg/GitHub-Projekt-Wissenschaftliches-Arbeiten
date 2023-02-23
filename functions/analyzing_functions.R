@@ -128,6 +128,7 @@ test.data %>%
   visualize_categorical(id.1 = "six", id.2 = "seven",
                         title = "Barplot", x.title = "Interesse", y.title = "Anzahl",
                         legend.title = "Faktor")
+## example: for variables
 test.data %>% 
   select(c("six", "four", "five", "seven")) %>% 
   visualize_categorical(id.1 = "six",
