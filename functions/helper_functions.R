@@ -1,5 +1,11 @@
-library(tidyverse)
-library(docstring)
+stats_metric.inner <- function(x) {
+  result <- data.frame("Anzahl" = length(x),
+                       "Mittelwert" = mean(x),
+                       "Standardabweichung" = sd(x),
+                       "Minimum" = min(x),
+                       "Maximum" = max(x))
+  return(result)
+}
 
 
 cramer_v <- function(contingency_table) {
@@ -15,4 +21,3 @@ cramer_v <- function(contingency_table) {
   
   return(sqrt(chisq / (n * (min(rows, cols) - 1))))
 }
-  
