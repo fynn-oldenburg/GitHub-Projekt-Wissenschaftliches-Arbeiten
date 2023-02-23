@@ -114,9 +114,9 @@ visualize_categorical <- function(data, id.1, id.2 = NULL,
     ggplot(aes(x = variable, fill = value)) +
     geom_bar(position = "dodge", alpha = .8) 
   
-  if (is.null(id.2)) { ## 3 Variablen
+  if (is.null(id.2)) { ## 3 Variables
     p <- p + facet_grid(col = vars(data[,1]))
-  }  else { ## 4 Variablen
+  }  else { ## 4 Variables
     p <- p + facet_grid(col = vars(data[,1]),  row = vars(data[,2]))
   }
   
@@ -130,7 +130,7 @@ test.data %>%
   visualize_categorical(id.1 = "six", id.2 = "seven",
                         title = "Barplot", x.title = "Interesse", y.title = "Anzahl",
                         legend.title = "Faktor")
-## example: for variables
+## example: four variables
 test.data %>% 
   select(c("six", "four", "five", "seven")) %>% 
   visualize_categorical(id.1 = "six",
