@@ -94,6 +94,8 @@ stats_categorical <- function (data) {
 }
 
 
+library(reshape2)
+library(ggplot2)
 
 visualize_categorical <- function(data, id.1, id.2 = NULL,
                                   title = NULL, x.title = NULL,
@@ -106,7 +108,7 @@ visualize_categorical <- function(data, id.1, id.2 = NULL,
   #' @param id.2 String. id for reshape2::melt(). For visualizing 4 Variables
   #'
   data <- data %>% 
-    melt(id.vars = c(id.1, id.2))
+    reshape2::melt(id.vars = c(id.1, id.2))
   
   p <- data %>% 
     ggplot(aes(x = variable, fill = value)) +
