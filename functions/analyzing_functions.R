@@ -83,6 +83,19 @@ stats_metric <- function (x) {
 }
 
 
-stats_categorical <- function (data) {
-    # TODO
+stats_categorical <- function (X) {
+  Xtable <- apply(X, 2, table)
+  # Häufigkeitstabellen der einzelnen Faktoren
+  
+  quantity <- function(X){
+    barplot(table(X))
+  }
+  
+  n <- ceiling(sqrt(ncol(X)))
+  par(mfrow = c(ceiling(ncol(X)/n), n))
+  apply(X, 2, quantity)
+  # Die Barplots der Häufigkeiten aller Spalten (Variablen) sollen dargestellt
+  # werden
+  
+  return(Xtable)
 }
