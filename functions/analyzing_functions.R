@@ -3,9 +3,14 @@ library(docstring)
 
 
 test.data <- data.frame(
-    "one" = rnorm(10),
-    "two" = rnorm(10, 50, 2),
-    "three" = rnorm(10, 10, 7)
+  "one" = rnorm(10),
+  "two" = rnorm(10, 50, 2),
+  "three" = rnorm(10, 10, 7),
+  "four" = as.ordered(sample(1:5, size = 10, replace = T)),
+  "five" = as.ordered(sample(1:5, size = 10, replace = T)),
+  "six" = as.factor(sample(c("A", "B", "C", "D"), size = 10, replace = T)),
+  "seven" = as.factor(sample(c("y", "n"), size = 10, replace = T))
+  
 )
 
 
@@ -96,6 +101,14 @@ stats_categorical <- function (X) {
   apply(X, 2, quantity)
   # Die Barplots der Häufigkeiten aller Spalten (Variablen) sollen dargestellt
   # werden
+  
+  modus <- function(x){
+    ux <- unique(x)
+    tab <- tabulate(match(x, ux))
+    ux[tab == max(tab)]
+  }
+  Xmodus <- apply(X, 2, modus)
+  Xtable$Modus <- Xmodus
   
   return(Xtable)
 }
