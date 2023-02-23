@@ -7,7 +7,12 @@ library(docstring)
 test.data <- data.frame(
     "one" = rnorm(10),
     "two" = rnorm(10, 50, 2),
-    "three" = rnorm(10, 10, 7)
+    "three" = rnorm(10, 10, 7),
+    "four" = as.ordered(sample(1:5, size = 10, replace = T)),
+    "five" = as.ordered(sample(1:5, size = 10, replace = T)),
+    "six" = as.factor(sample(c("A", "B", "C", "D"), size = 10, replace = T)),
+    "seven" = as.factor(sample(c("y", "n"), size = 10, replace = T))
+    
 )
 
 
@@ -84,7 +89,56 @@ test.data %>%
 
 
 
-
 stats_categorical <- function (data) {
     # TODO
 }
+
+
+
+visualize_categorical <- function(data, id.1, id.2 = NULL,
+                                  title = NULL, x.title = NULL,
+                                  y.title = NULL, legend.title = NULL) {
+  #' Bar-Plot for three or four categorical variables
+  #'
+  #' 
+  #' @param data Data Frame
+  #' @param id.1 String. id for reshape2::melt()
+  #' @param id.2 String. id for reshape2::melt(). For visualizing 4 Variables
+  #'
+  data <- data %>% 
+    melt(id.vars = c(id.1, id.2))
+  
+  p <- data %>% 
+    ggplot(aes(x = variable, fill = value)) +
+    geom_bar(position = "dodge", alpha = .8) 
+  
+  if (is.null(id.2)) { ## 3 Variablen
+    p <- p + facet_grid(col = vars(data[,1]))
+  }  else { ## 4 Variablen
+    p <- p + facet_grid(col = vars(data[,1]),  row = vars(data[,2]))
+  }
+  
+  p + labs(title = title, x = x.title, y = y.title, fill = legend.title)
+  
+}
+
+## example: four variables
+test.data %>% 
+  select(c("six", "four", "five", "seven")) %>% 
+  visualize_categorical(id.1 = "six", id.2 = "seven",
+                        title = "Barplot", x.title = "Interesse", y.title = "Anzahl",
+                        legend.title = "Faktor")
+test.data %>% 
+  select(c("six", "four", "five", "seven")) %>% 
+  visualize_categorical(id.1 = "six",
+                        title = "Barplot", x.title = "Interesse / Mathe LK", y.title = "Anzahl",
+                        legend.title = "Faktor")
+
+
+## example: three variables
+test.data %>% 
+  select(c("six", "four", "five")) %>% 
+  visualize_categorical(id.1 = "six")
+
+
+
