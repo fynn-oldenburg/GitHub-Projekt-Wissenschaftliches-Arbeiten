@@ -1,13 +1,17 @@
 library(docstring)
 library(dplyr)
 
-## Parameter
-n <- 100    ## Anzahl Studierende
-seed <- 23  ## Reproduzierbarkeit
+## Anzahl Studierende
+n <- 100
+
+
+## Alter
+set.seed(8)
+alter <- floor(rnorm(n, 25, 2))
 
 
 ## Studienfach
-set.seed(seed) 
+set.seed(35) 
 studienfach <- sample(c("Statistik", "Data Science", "Mathe", "Informatik"),
                       size = n,
                       prob = c(.35, .35, .1, .2),
@@ -48,24 +52,23 @@ mathe.interesse <- interesse(pobStat = c(.01, .05, .09, .15, .2, .3, .2),
                              probDS = c(.05, .1, .15, .25, .25, .1, .1), 
                              probMath = c(0, 0, 0, .02, .18, .3, .5), 
                              probInfo = c(.05, .05, .2, .2, .3, .1, .1),
-                             seed = seed
-                             )
+                             seed = 456
+)
 
 
 ## Interesse an Programmieren
 prog.interesse <- interesse(pobStat = c(.03, .05, .12, .25, .35, .15, .05), 
                             probDS = c(.01, .02, .05, .1, .3, .32, .2), 
                             probMath = c(.05, .05, .2, .3, .2, .15, .05), 
-                            probInfo = c(.01, .01, .05, .13, .2, .35, .25),
-                            seed = seed
-                            )
+                            probInfo = c(.01, .01, .05, .13, .2, .3, .3),
+                            seed = 256
+)
 
 
 ## Mathe LK
-prob.interesse <- function(i, probMatheLK, seed) {
-  set.seed(seed)
+prob.interesse <- function(i, probMatheLK) {
   if (mathe.interesse[i] > 4){
-    probMatheLK <- probMatheLK + .2
+    probMatheLK <- probMatheLK + .1
   }
   if (prog.interesse[i] > 4) {
     probMatheLK <- probMatheLK + .05
@@ -73,37 +76,42 @@ prob.interesse <- function(i, probMatheLK, seed) {
   return(sample(c("ja", "nein"), size = 1, prob = c(probMatheLK, 1 - probMatheLK)))
 }
 
+seed <- 102
 mathe.LK <- c()
 for (i in 1:n){
   if (studienfach[i] == "Statistik") {
-    probMatheLK <- .6 
-    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
+    set.seed(seed)
+    probMatheLK <- .55 
+    mathe.LK[i] <- prob.interesse(i, probMatheLK)
     
   } else if (studienfach[i] == "Data Science") {
+    set.seed(seed)
     probMatheLK <- .5 
-    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
+    mathe.LK[i] <- prob.interesse(i, probMatheLK)
     
   } else if (studienfach[i] == "Mathe") {
+    set.seed(seed)
     probMatheLK <- .7
-    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
+    mathe.LK[i] <- prob.interesse(i, probMatheLK)
     
   } else { ##Informatik
+    set.seed(seed)
     probMatheLK <- .5
-    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
+    mathe.LK[i] <- prob.interesse(i, probMatheLK)
   }
 }
 
 
 
 
-set.seed(seed)
+set.seed(8)
 data <- data.frame(
   
   ## ID
   "ID" = 1:n,
   
   ## Alter 
-  "Alter" = floor(rnorm(n, 25, 2)),
+  "Alter" = alter,
   
   ## Studienfach
   "Studienfach" = studienfach,
