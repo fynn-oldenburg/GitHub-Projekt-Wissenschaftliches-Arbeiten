@@ -66,7 +66,8 @@ prog.interesse <- interesse(pobStat = c(.03, .05, .12, .25, .35, .15, .05),
 
 
 ## Mathe LK
-prob.interesse <- function(i, probMatheLK) {
+prob.interesse <- function(i, probMatheLK, seed) {
+  set.seed(seed)
   if (mathe.interesse[i] > 4){
     probMatheLK <- probMatheLK + .1
   }
@@ -80,31 +81,25 @@ seed <- 102
 mathe.LK <- c()
 for (i in 1:n){
   if (studienfach[i] == "Statistik") {
-    set.seed(seed)
     probMatheLK <- .55 
-    mathe.LK[i] <- prob.interesse(i, probMatheLK)
+    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
     
   } else if (studienfach[i] == "Data Science") {
-    set.seed(seed)
     probMatheLK <- .5 
-    mathe.LK[i] <- prob.interesse(i, probMatheLK)
+    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
     
   } else if (studienfach[i] == "Mathe") {
-    set.seed(seed)
     probMatheLK <- .7
-    mathe.LK[i] <- prob.interesse(i, probMatheLK)
+    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
     
   } else { ##Informatik
-    set.seed(seed)
     probMatheLK <- .5
-    mathe.LK[i] <- prob.interesse(i, probMatheLK)
+    mathe.LK[i] <- prob.interesse(i, probMatheLK, seed)
   }
 }
 
 
 
-
-set.seed(8)
 data <- data.frame(
   
   ## ID
