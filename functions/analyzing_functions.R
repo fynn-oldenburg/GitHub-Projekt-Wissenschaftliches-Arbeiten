@@ -89,8 +89,12 @@ stats_metric <- function (x) {
 
 
 stats_categorical <- function (X) {
+  #' calculate descriptive statistics for metric variables
+  #'
+  #' @param X Ein Data Frame
+  
   Xtable <- apply(X, 2, table)
-  # Häufigkeitstabellen der einzelnen Faktoren
+  # Haeufigkeitstabellen der einzelnen Faktoren
   
   quantity <- function(X){
     barplot(table(X))
@@ -99,7 +103,7 @@ stats_categorical <- function (X) {
   n <- ceiling(sqrt(ncol(X)))
   par(mfrow = c(ceiling(ncol(X)/n), n))
   apply(X, 2, quantity)
-  # Die Barplots der Häufigkeiten aller Spalten (Variablen) sollen dargestellt
+  # Die Barplots der Haeufigkeiten aller Spalten (Variablen) sollen dargestellt
   # werden
   
   modus <- function(x){
@@ -110,5 +114,22 @@ stats_categorical <- function (X) {
   Xmodus <- apply(X, 2, modus)
   Xtable$Modus <- Xmodus
   
+  freq <- function(X){
+    table(X)/length(X)
+  }
+  
+  normentropy <- function(x){
+    -sum(freq(x) * log2(freq(x)))/log2(length(x))
+  }
+  Xentropy <- apply(X, 2, normentropy)
+  Xtable$NormEntropie <- Xentropy
+  # Berechnung der normierten Entropie der einzelnen Faktoren
+  
+  Xtable$AnzahlNA <- length(which(is.na(test.data) == TRUE))
+  # Anzahl der fehlenden Werte im gesamten Data Frame
+  
   return(Xtable)
 }
+
+## usage example
+# stats_categorical(test.data)
