@@ -100,29 +100,39 @@ library(ggplot2)
 visualize_categorical <- function(data, id.1, id.2 = NULL,
                                   title = NULL, x.title = NULL,
                                   y.title = NULL, legend.title = NULL) {
-  #' Bar-Plot for three or four categorical variables
-  #'
+  #' Bar-Plot for three or four categorical variables.
+  #' Required packages: ggplot2, reshape2
+  #' 
   #' 
   #' @param data Data Frame
   #' @param id.1 String. id for reshape2::melt()
   #' @param id.2 String. id for reshape2::melt(). For visualizing 4 Variables
-  #'
+  #' @param title String. title
+  #' @param x.title String. x-axis label 
+  #' @param y.title String. y-axis label
+  #' @param legend.title String. legend label
+  library(ggplot2)
+  ## rearrange data
   data <- data %>% 
     reshape2::melt(id.vars = c(id.1, id.2))
   
+  ## Bar Plot
   p <- data %>% 
     ggplot(aes(x = variable, fill = value)) +
     geom_bar(position = "dodge", alpha = .8) 
   
-  if (is.null(id.2)) { ## 3 Variables
+  if (is.null(id.2)) { 
+    ## split by one variable
     p <- p + facet_grid(col = vars(data[,1]))
-  }  else { ## 4 Variables
+  }  else {
+    ## split by two variables
     p <- p + facet_grid(col = vars(data[,1]),  row = vars(data[,2]))
   }
-  
+  ## labels
   p + labs(title = title, x = x.title, y = y.title, fill = legend.title)
   
 }
+# ?visualize_categorical
 
 ## example: four variables
 test.data %>% 
