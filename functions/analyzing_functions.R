@@ -7,7 +7,12 @@ library(docstring)
 test.data <- data.frame(
     "one" = rnorm(10),
     "two" = rnorm(10, 50, 2),
-    "three" = rnorm(10, 10, 7)
+    "three" = rnorm(10, 10, 7),
+    "four" = as.ordered(sample(1:5, size = 10, replace = T)),
+    "five" = as.ordered(sample(1:5, size = 10, replace = T)),
+    "six" = as.factor(sample(c("A", "B", "C", "D"), size = 10, replace = T)),
+    "seven" = as.factor(sample(c("y", "n"), size = 10, replace = T))
+    
 )
 
 
@@ -17,7 +22,7 @@ categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
     #' @param data data.frame
     #' @param by int/string/vector - mindestens ordinale Variable(n) des Datensatzes, nach denen kategorisiert werden soll
     #' @param bins int - Anzahl der Kategorien
-    #' @param in_place bool - Wenn TRUE werden die Originalwerte der Variable(n) mit den errechneten Kategorien Ã¼berschrieben
+    #' @param in_place bool - Wenn TRUE werden die Originalwerte der Variable(n) mit den errechneten Kategorien ÃƒÂ¼berschrieben
 
     # exceptions
     if (!any(class(data) == 'data.frame')) {
@@ -84,27 +89,27 @@ test.data %>%
 
 
 
-
 stats_categorical <- function (data) {
     # TODO
 }
 
 
-## (c) Funktion für deskriptive bivariate Statistiken für zwei kategoriale Variablen
+
+## (c) Funktion fÃ¼r deskriptive bivariate Statistiken fÃ¼r zwei kategoriale Variablen
 bivariate_stats_categorical <- function(data, x_var, y_var) {
   #' Funktion zur Berechnung von Bivariate Kategorialen Statistiken
   #' 
   #' Diese Funktion nimmt ein Datenrahmen und zwei kategoriale Variablen auf und gibt eine
-  #' Reihe von Statistiken zurück, die die Beziehung zwischen diesen beiden Variablen darstellen.
+  #' Reihe von Statistiken zurÃ¼ck, die die Beziehung zwischen diesen beiden Variablen darstellen.
   #' 
-  #' @param data Ein Datenrahmen, der die Variablen enthält.
+  #' @param data Ein Datenrahmen, der die Variablen enthÃ¤lt.
   #' @param x_var Der Name der ersten kategorialen Variable.
   #' @param y_var Der Name der zweiten kategorialen Variable.
   #' 
   #' @return Eine Liste mit den folgenden Elementen:
   #' \item{contingency_table}{Eine Kontingenztabelle der beiden Variablen.}
-  #' \item{row_percents}{Zeilenprozentsätze der Kontingenztabelle.}
-  #' \item{col_percents}{Spaltenprozentsätze der Kontingenztabelle.}
+  #' \item{row_percents}{ZeilenprozentsÃ¤tze der Kontingenztabelle.}
+  #' \item{col_percents}{SpaltenprozentsÃ¤tze der Kontingenztabelle.}
   #' \item{chi_squared}{Die Chi-Quadrat-Statistik.}
   #' \item{p_value}{Der p-Wert der Chi-Quadrat-Statistik.}
   #' \item{phi}{Der Phi-Koeffizient.}
@@ -122,7 +127,7 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   #' 
   #' @export
   
-  # Fehler bei der Suche für x_var und y_var
+  # Fehler bei der Suche fÃ¼r x_var und y_var
   if (!(x_var %in% names(data))) {
     stop("x_var ist nicht in data")
   }
@@ -133,7 +138,7 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   # Kontingenztabelle erstellen
   contingency_table <- table(data[[x_var]], data[[y_var]])
   
-  # Zeilen- und Spaltenprozentsätze berechnen
+  # Zeilen- und SpaltenprozentsÃ¤tze berechnen
   row_percents <- prop.table(contingency_table, margin = 1) * 100
   col_percents <- prop.table(contingency_table, margin = 2) * 100
   
@@ -181,7 +186,7 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
 docstring(bivariate_stats_categorical)
 
 
-## Deskriptive bivariate Statistiken für zwei kategoriale Variablen
+## Deskriptive bivariate Statistiken fÃ¼r zwei kategoriale Variablen
 ## Beispiel:
 ## bivariate_stats_categorical(data, "Studienfach", "Mathe-LK (ja/nein)")
 
@@ -192,6 +197,66 @@ docstring(bivariate_stats_categorical)
 # 
 # bivariate_stats_categorical(biv_data, 'x', 'y')
 
-# Für row_- und col_percents addieren die ProzentsÃ¤tze nicht zu 100
+# FÃ¼r row_- und col_percents addieren die ProzentsÃƒÂ¤tze nicht zu 100
 data(mtcars)
 bivariate_stats_categorical(mtcars, "cyl", "vs")
+
+
+library(reshape2)
+library(ggplot2)
+
+visualize_categorical <- function(data, id.1, id.2 = NULL,
+                                  title = NULL, x.title = NULL,
+                                  y.title = NULL, legend.title = NULL) {
+  #' Bar-Plot for three or four categorical variables.
+  #' Required packages: ggplot2, reshape2
+  #' 
+  #' 
+  #' @param data Data Frame
+  #' @param id.1 String. id for reshape2::melt()
+  #' @param id.2 String. id for reshape2::melt(). For visualizing 4 Variables
+  #' @param title String. title
+  #' @param x.title String. x-axis label 
+  #' @param y.title String. y-axis label
+  #' @param legend.title String. legend label
+  library(ggplot2)
+  ## rearrange data
+  data <- data %>% 
+    reshape2::melt(id.vars = c(id.1, id.2))
+  
+  ## Bar Plot
+  p <- data %>% 
+    ggplot(aes(x = variable, fill = value)) +
+    geom_bar(position = "dodge", alpha = .8) 
+  
+  if (is.null(id.2)) { 
+    ## split by one variable
+    p <- p + facet_grid(col = vars(data[,1]))
+  }  else {
+    ## split by two variables
+    p <- p + facet_grid(col = vars(data[,1]),  row = vars(data[,2]))
+  }
+  ## labels
+  p + labs(title = title, x = x.title, y = y.title, fill = legend.title)
+  
+}
+# ?visualize_categorical
+
+## example: four variables
+test.data %>% 
+  select(c("six", "four", "five", "seven")) %>% 
+  visualize_categorical(id.1 = "six", id.2 = "seven",
+                        title = "Barplot", x.title = "Interesse", y.title = "Anzahl",
+                        legend.title = "Faktor")
+## example: four variables
+test.data %>% 
+  select(c("six", "four", "five", "seven")) %>% 
+  visualize_categorical(id.1 = "six",
+                        title = "Barplot", x.title = "Interesse / Mathe LK", y.title = "Anzahl",
+                        legend.title = "Faktor")
+
+
+## example: three variables
+test.data %>% 
+  select(c("six", "four", "five")) %>% 
+  visualize_categorical(id.1 = "six")
