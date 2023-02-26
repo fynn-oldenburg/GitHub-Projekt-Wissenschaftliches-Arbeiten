@@ -93,6 +93,16 @@ stats_categorical <- function (X) {
   #'
   #' @param X Ein Data Frame
   
+  Xcat <- X
+  colnames(Xcat) <- c(1:ncol(Xcat))
+  fac <- rep(NULL, ncol(Xcat))
+  for(i in 1:ncol(Xcat)){
+    fac[i] <- is.factor(Xcat[,i])
+  }
+  catfactors <- which(fac == TRUE)
+  X <- X[, catfactors]
+  # Es werden nur die kategoriellen Variablen weiterverarbeitet
+  
   Xtable <- apply(X, 2, table)
   # Haeufigkeitstabellen der einzelnen Faktoren
   
