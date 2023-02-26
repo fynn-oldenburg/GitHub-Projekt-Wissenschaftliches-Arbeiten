@@ -260,10 +260,18 @@ stats_bivariate_metric_dichotom <- function(metric_var, dichotomous_var){
   
   mean <- c(mean(group_0), mean(group_1))
   sd <- c(sd(group_0), sd(group_1))
+  t_test <- t.test(group_0, group_1)
   
-  dist <- data.frame(mean = mean, sd = sd)
+  boxplot(group_0, group_1, col = c("red", "green"), 
+          names = c("Gruppe 0", "Gruppe 1"), 
+          main = "Boxplot beider Gruppen im Vergleich")
   
-  return(dist)
+  cat("Mittelwert von Gruppe 0:", mean[1], "\n")
+  cat("Mittelwert von Gruppe 1:", mean[2], "\n\n")
+  cat("Standardabweichung von Gruppe 0:", sd[1], "\n")
+  cat("Standardabweichung von Gruppe 1:", sd[2], "\n\n")
+  cat("t-Wert des Gruppenvergleichs:", t_test$statistic, "\n")
+  cat("p-Wert des Gruppenvergleichs:", t_test$p.value, "\n")
 }
 
 ## Usage example:
