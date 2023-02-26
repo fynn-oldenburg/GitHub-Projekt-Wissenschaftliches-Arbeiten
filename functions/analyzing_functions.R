@@ -5,9 +5,15 @@ library(docstring)
 
 
 test.data <- data.frame(
+
     "one" = rnorm(10),
     "two" = rnorm(10, 50, 2),
-    "three" = rnorm(10, 10, 7)
+    "three" = rnorm(10, 10, 7),
+    "four" = as.ordered(sample(1:5, size = 10, replace = T)),
+    "five" = as.ordered(sample(1:5, size = 10, replace = T)),
+    "six" = as.factor(sample(c("A", "B", "C", "D"), size = 10, replace = T)),
+    "seven" = as.factor(sample(c("y", "n"), size = 10, replace = T))
+    
 )
 
 
@@ -17,7 +23,7 @@ categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
     #' @param data data.frame
     #' @param by int/string/vector - mindestens ordinale Variable(n) des Datensatzes, nach denen kategorisiert werden soll
     #' @param bins int - Anzahl der Kategorien
-    #' @param in_place bool - Wenn TRUE werden die Originalwerte der Variable(n) mit den errechneten Kategorien überschrieben
+    #' @param in_place bool - Wenn TRUE werden die Originalwerte der Variable(n) mit den errechneten Kategorien Ã¼berschrieben
 
     # exceptions
     if (!any(class(data) == 'data.frame')) {
@@ -84,25 +90,62 @@ test.data %>%
 
 
 
-
-stats_categorical <- function (data) {
-    # TODO
-}
-
-## Cramer_v Funktion f�r kurze Zeit addiert
-cramer_v <- function(contingency_table) {
-  #' calculate cramer's v
+stats_categorical <- function (X) {
+  #' calculate descriptive statistics for metric variables
   #'
-  #' @param contingency_table die Kontingenztabelle
+  #' @param X Ein Data Frame
   
-  # functionality
-  chisq <- chisq.test(contingency_table)$statistic
-  n <- sum(contingency_table)
-  rows <- nrow(contingency_table)
-  cols <- ncol(contingency_table)
+  Xcat <- X
+  colnames(Xcat) <- c(1:ncol(Xcat))
+  fac <- rep(NULL, ncol(Xcat))
+  for(i in 1:ncol(Xcat)){
+    fac[i] <- is.factor(Xcat[,i])
+  }
+  catfactors <- which(fac == TRUE)
+  X <- X[, catfactors]
+  # Es werden nur die kategoriellen Variablen weiterverarbeitet
   
-  return(sqrt(chisq / (n * (min(rows, cols) - 1))))
+  Xtable <- apply(X, 2, table)
+  # Haeufigkeitstabellen der einzelnen Faktoren
+  
+  quantity <- function(X){
+    barplot(table(X))
+  }
+  
+  n <- ceiling(sqrt(ncol(X)))
+  par(mfrow = c(ceiling(ncol(X)/n), n))
+  apply(X, 2, quantity)
+  # Die Barplots der Haeufigkeiten aller Spalten (Variablen) sollen dargestellt
+  # werden
+  
+  modus <- function(x){
+    ux <- unique(x)
+    tab <- tabulate(match(x, ux))
+    ux[tab == max(tab)]
+  }
+  Xmodus <- apply(X, 2, modus)
+  Xtable$Modus <- Xmodus
+  
+  freq <- function(X){
+    table(X)/length(X)
+  }
+  
+  normentropy <- function(x){
+    -sum(freq(x) * log2(freq(x)))/log2(length(x))
+  }
+  Xentropy <- apply(X, 2, normentropy)
+  Xtable$NormEntropie <- Xentropy
+  # Berechnung der normierten Entropie der einzelnen Faktoren
+  
+  Xtable$AnzahlNA <- length(which(is.na(test.data) == TRUE))
+  # Anzahl der fehlenden Werte im gesamten Data Frame
+  
+  return(Xtable)
 }
+
+## usage example
+# stats_categorical(test.data)
+
 
 ## (c) Funktion für deskriptive bivariate Statistiken für zwei kategoriale Variablen
 bivariate_stats_categorical <- function(data, x_var, y_var) {
@@ -122,7 +165,7 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   #' \item{chi_squared}{Die Chi-Quadrat-Statistik.}
   #' \item{p_value}{Der p-Wert der Chi-Quadrat-Statistik.}
   #' \item{phi}{Der Phi-Koeffizient.}
-  #' \item{cramer_v}{Der Cramér's V-Koeffizient.}
+  #' \item{cramer_v}{Der Cramer's V-Koeffizient.}
   #' \item{contingency_coefficient}{Der Kontingenzkoeffizient.}
   #' \item{fisher_test}{Der Ergebnis von Fisher's Exact Test, falls die Tabelle 2x2 ist.}
   #' \item{odds_ratio}{Die Odds Ratio, falls die Tabelle 2x2 ist.}
@@ -159,8 +202,10 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
   phi <- sqrt(chisq / sum(contingency_table))
   
   # Berechnung Cramer's V
-  #cramer_v <- helper_functions::cramer_v(contingency_table)
-  cramer_v <- cramer_v(contingency_table)
+  n <- sum(contingency_table)
+  rows <- nrow(contingency_table)
+  cols <- ncol(contingency_table)
+  cramer_v <- bivariate_stats_categorical.cramer_v(contingency_table, n, rows, cols)
   
   # Berechnung des Kontingenzkoeffizienten
   contingency_coefficient <- sqrt(chisq / (chisq + n))
@@ -199,10 +244,71 @@ docstring(bivariate_stats_categorical)
 
 # usage test
 
-biv_data <- data.frame('x' = sample(c(1,2,3), 10, replace = TRUE),
-                       'y' = sample(c('one', 'two', 'three'), 10, replace = TRUE))
+# biv_data <- data.frame('x' = sample(c(1,2,3), 10, replace = TRUE),
+#                        'y' = sample(c('one', 'two', 'three'), 10, replace = TRUE))
+# 
+# bivariate_stats_categorical(biv_data, 'x', 'y')
 
-bivariate_stats_categorical(biv_data, 'x', 'y')
+# Für row_- und col_percents addieren die ProzentsÃ¤tze nicht zu 100
+data(mtcars)
+bivariate_stats_categorical(mtcars, "cyl", "vs")
 
-# Für row_- und col_percents addieren die Prozentsätze nicht zu 100
 
+library(reshape2)
+library(ggplot2)
+
+visualize_categorical <- function(data, id.1, id.2 = NULL,
+                                  title = NULL, x.title = NULL,
+                                  y.title = NULL, legend.title = NULL) {
+  #' Bar-Plot for three or four categorical variables.
+  #' Required packages: ggplot2, reshape2
+  #' 
+  #' 
+  #' @param data Data Frame
+  #' @param id.1 String. id for reshape2::melt()
+  #' @param id.2 String. id for reshape2::melt(). For visualizing 4 Variables
+  #' @param title String. title
+  #' @param x.title String. x-axis label 
+  #' @param y.title String. y-axis label
+  #' @param legend.title String. legend label
+  library(ggplot2)
+  ## rearrange data
+  data <- data %>% 
+    reshape2::melt(id.vars = c(id.1, id.2))
+  
+  ## Bar Plot
+  p <- data %>% 
+    ggplot(aes(x = variable, fill = value)) +
+    geom_bar(position = "dodge", alpha = .8) 
+  
+  if (is.null(id.2)) { 
+    ## split by one variable
+    p <- p + facet_grid(col = vars(data[,1]))
+  }  else {
+    ## split by two variables
+    p <- p + facet_grid(col = vars(data[,1]),  row = vars(data[,2]))
+  }
+  ## labels
+  p + labs(title = title, x = x.title, y = y.title, fill = legend.title)
+  
+}
+# ?visualize_categorical
+
+## example: four variables
+test.data %>% 
+  select(c("six", "four", "five", "seven")) %>% 
+  visualize_categorical(id.1 = "six", id.2 = "seven",
+                        title = "Barplot", x.title = "Interesse", y.title = "Anzahl",
+                        legend.title = "Faktor")
+## example: four variables
+test.data %>% 
+  select(c("six", "four", "five", "seven")) %>% 
+  visualize_categorical(id.1 = "six",
+                        title = "Barplot", x.title = "Interesse / Mathe LK", y.title = "Anzahl",
+                        legend.title = "Faktor")
+
+
+## example: three variables
+test.data %>% 
+  select(c("six", "four", "five")) %>% 
+  visualize_categorical(id.1 = "six")
