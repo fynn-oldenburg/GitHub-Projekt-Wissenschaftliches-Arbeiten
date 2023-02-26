@@ -250,6 +250,26 @@ docstring(bivariate_stats_categorical)
 data(mtcars)
 bivariate_stats_categorical(mtcars, "cyl", "vs")
 
+stats_bivariate_metric_dichotom <- function(metric_var, dichotomous_var){
+  #' @param metric_var Vektor aus Auspraegungen einer metrischen Variablen
+  #' @param dichotomous_var Vektor aus Auspraegungen einer metrischen Variablen,
+  #'                        kodiert mit 0 und 1
+  
+  group_0 <- metric_var[dichotomous_var == 0]
+  group_1 <- metric_var[dichotomous_var == 1] 
+  
+  mean <- c(mean(group_0), mean(group_1))
+  sd <- c(sd(group_0), sd(group_1))
+  
+  dist <- data.frame(mean = mean, sd = sd)
+  
+  return(dist)
+}
+
+## Usage example:
+# test.data$seven <- as.factor(sample(c(0, 1), size = 10, replace = T))
+# stats_bivariate_metric_dichotom(test.data$three, testdata$seven)
+
 
 library(reshape2)
 library(ggplot2)
