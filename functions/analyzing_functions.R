@@ -5,6 +5,7 @@ library(docstring)
 
 
 test.data <- data.frame(
+
     "one" = rnorm(10),
     "two" = rnorm(10, 50, 2),
     "three" = rnorm(10, 10, 7),
@@ -89,10 +90,61 @@ test.data %>%
 
 
 
-stats_categorical <- function (data) {
-    # TODO
+stats_categorical <- function (X) {
+  #' calculate descriptive statistics for metric variables
+  #'
+  #' @param X Ein Data Frame
+  
+  Xcat <- X
+  colnames(Xcat) <- c(1:ncol(Xcat))
+  fac <- rep(NULL, ncol(Xcat))
+  for(i in 1:ncol(Xcat)){
+    fac[i] <- is.factor(Xcat[,i])
+  }
+  catfactors <- which(fac == TRUE)
+  X <- X[, catfactors]
+  # Es werden nur die kategoriellen Variablen weiterverarbeitet
+  
+  Xtable <- apply(X, 2, table)
+  # Haeufigkeitstabellen der einzelnen Faktoren
+  
+  quantity <- function(X){
+    barplot(table(X))
+  }
+  
+  n <- ceiling(sqrt(ncol(X)))
+  par(mfrow = c(ceiling(ncol(X)/n), n))
+  apply(X, 2, quantity)
+  # Die Barplots der Haeufigkeiten aller Spalten (Variablen) sollen dargestellt
+  # werden
+  
+  modus <- function(x){
+    ux <- unique(x)
+    tab <- tabulate(match(x, ux))
+    ux[tab == max(tab)]
+  }
+  Xmodus <- apply(X, 2, modus)
+  Xtable$Modus <- Xmodus
+  
+  freq <- function(X){
+    table(X)/length(X)
+  }
+  
+  normentropy <- function(x){
+    -sum(freq(x) * log2(freq(x)))/log2(length(x))
+  }
+  Xentropy <- apply(X, 2, normentropy)
+  Xtable$NormEntropie <- Xentropy
+  # Berechnung der normierten Entropie der einzelnen Faktoren
+  
+  Xtable$AnzahlNA <- length(which(is.na(test.data) == TRUE))
+  # Anzahl der fehlenden Werte im gesamten Data Frame
+  
+  return(Xtable)
 }
 
+## usage example
+# stats_categorical(test.data)
 
 
 ## (c) Funktion für deskriptive bivariate Statistiken für zwei kategoriale Variablen
