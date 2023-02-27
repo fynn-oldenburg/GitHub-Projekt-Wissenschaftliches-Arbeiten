@@ -9,5 +9,6 @@ data <- read.csv("students-data.csv")
 
 # Ausführen der Funktionen
 
-#TODO
+stats_metric(data.frame(data$Alter, data$Mathe, data$Programmieren))
+
 
