@@ -1,6 +1,6 @@
 
-source("helper_functions.R")
-source("analyzing_functions.R")
+source("functions/helper_functions.R")
+source("functions/analyzing_functions.R")
 
 # Einlesen der Datei
 
