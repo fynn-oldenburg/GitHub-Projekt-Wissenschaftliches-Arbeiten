@@ -253,6 +253,35 @@ docstring(bivariate_stats_categorical)
 data(mtcars)
 bivariate_stats_categorical(mtcars, "cyl", "vs")
 
+stats_bivariate_metric_dichotom <- function(metric_var, dichotomous_var){
+  #' @param metric_var metrischer Vektor
+  #' @param dichotomous_var dichotomer Vektor
+  
+  A <- as.character(unique(dichotomous_var)[1])
+  B <- as.character(unique(dichotomous_var)[2])
+  
+  group_A <- metric_var[dichotomous_var == A]
+  group_B <- metric_var[dichotomous_var == B] 
+  
+  mean <- c(mean(group_A), mean(group_B))
+  sd <- c(sd(group_A), sd(group_B))
+  t_test <- t.test(group_A, group_B)
+  
+  boxplot(group_A, group_B, col = c("red", "green"), 
+          names = c(A, B), 
+          main = "Boxplot beider Gruppen im Vergleich")
+  
+  cat("Mittelwert von Gruppe", A,":", mean[1], "\n")
+  cat("Mittelwert von Gruppe", B, ":", mean[2], "\n\n")
+  cat("Standardabweichung von Gruppe",  A, ":", sd[1], "\n")
+  cat("Standardabweichung von Gruppe", B, ":", sd[2], "\n\n")
+  cat("t-Wert des Gruppenvergleichs:", t_test$statistic, "\n")
+  cat("p-Wert des Gruppenvergleichs:", t_test$p.value, "\n")
+}
+
+## Usage example:
+# stats_bivariate_metric_dichotom(test.data$three, test.data$seven)
+
 
 library(reshape2)
 library(ggplot2)
