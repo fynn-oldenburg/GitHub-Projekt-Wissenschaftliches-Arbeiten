@@ -89,7 +89,7 @@ test.data %>%
 
 
 
-stats_categorical <- function (data) {
+stats_categorical <- function (X) {
   #' calculate descriptive statistics for metric variables
   #'
   #' @param X Ein Data Frame
@@ -251,32 +251,33 @@ data(mtcars)
 bivariate_stats_categorical(mtcars, "cyl", "vs")
 
 stats_bivariate_metric_dichotom <- function(metric_var, dichotomous_var){
-  #' @param metric_var Vektor aus Auspraegungen einer metrischen Variablen
-  #' @param dichotomous_var Vektor aus Auspraegungen einer metrischen Variablen,
-  #'                        kodiert mit 0 und 1
+  #' @param metric_var metrischer Vektor
+  #' @param dichotomous_var dichotomer Vektor
   
-  group_0 <- metric_var[dichotomous_var == 0]
-  group_1 <- metric_var[dichotomous_var == 1] 
+  A <- as.character(unique(dichotomous_var)[1])
+  B <- as.character(unique(dichotomous_var)[2])
   
-  mean <- c(mean(group_0), mean(group_1))
-  sd <- c(sd(group_0), sd(group_1))
-  t_test <- t.test(group_0, group_1)
+  group_A <- metric_var[dichotomous_var == A]
+  group_B <- metric_var[dichotomous_var == B] 
   
-  boxplot(group_0, group_1, col = c("red", "green"), 
-          names = c("Gruppe 0", "Gruppe 1"), 
+  mean <- c(mean(group_A), mean(group_B))
+  sd <- c(sd(group_A), sd(group_B))
+  t_test <- t.test(group_A, group_B)
+  
+  boxplot(group_A, group_B, col = c("red", "green"), 
+          names = c(A, B), 
           main = "Boxplot beider Gruppen im Vergleich")
   
-  cat("Mittelwert von Gruppe 0:", mean[1], "\n")
-  cat("Mittelwert von Gruppe 1:", mean[2], "\n\n")
-  cat("Standardabweichung von Gruppe 0:", sd[1], "\n")
-  cat("Standardabweichung von Gruppe 1:", sd[2], "\n\n")
+  cat("Mittelwert von Gruppe", A,":", mean[1], "\n")
+  cat("Mittelwert von Gruppe", B, ":", mean[2], "\n\n")
+  cat("Standardabweichung von Gruppe",  A, ":", sd[1], "\n")
+  cat("Standardabweichung von Gruppe", B, ":", sd[2], "\n\n")
   cat("t-Wert des Gruppenvergleichs:", t_test$statistic, "\n")
   cat("p-Wert des Gruppenvergleichs:", t_test$p.value, "\n")
 }
 
 ## Usage example:
-# test.data$seven <- as.factor(sample(c(0, 1), size = 10, replace = T))
-# stats_bivariate_metric_dichotom(test.data$three, testdata$seven)
+# stats_bivariate_metric_dichotom(test.data$three, test.data$seven)
 
 
 library(reshape2)
