@@ -4,8 +4,8 @@ output: pdf_document
 ---
 
 ```{r}
-source("functions/helper_functions.R")
-source("functions/analyzing_functions.R")
+suppressWarnings(source("functions/helper_functions.R"))
+suppressWarnings(source("functions/analyzing_functions.R"))
 ```
 
 # Einlesen der Datei
@@ -43,4 +43,16 @@ bivariate_stats_categorical(data, data$Programmieren, data$MatheLK)
 
 ```{r}
 stats_bivariate_metric_dichotom(data$Alter, data$MatheLK)
+```
+
+## Kategorisierung ordinaler Variablen
+
+```{r}
+categorize_ordinal(data, by = c(2, 4, 5), bins = 3)
+```
+
+## Visualisierung kategorialer Variablen
+
+```{r}
+visualize_categorical()
 ```
