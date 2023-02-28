@@ -1,9 +1,70 @@
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(reshape2)
+
 suppressWarnings(source("functions/helper_functions.R"))
 suppressWarnings(source("functions/analyzing_functions.R"))
 
-# Einlesen der Datei
+## data import
+data <- read.csv("students-data.csv") %>%
+    mutate(MatheLK = as.factor (MatheLK),
+           Programmieren = as.ordered(Programmieren),
+           Mathe = as.ordered(Mathe))
 
-data <- read.csv("students-data.csv")
+## first look
+str(data)
+apply(data, 2, table)
+
+
+## all individually
+p1 <- data %>% 
+  ggplot(aes(x = Alter)) +
+  geom_bar()
+p2 <- data %>% 
+  ggplot(aes(x = Studienfach)) +
+  geom_bar()
+p3 <- data %>% 
+  ggplot(aes(x = Programmieren)) +
+  geom_bar()
+p4 <- data %>% 
+  ggplot(aes(x = Mathe)) +
+  geom_bar()
+p5 <- data %>% 
+  ggplot(aes(x = MatheLK)) +
+  geom_bar()
+
+grid.arrange(p1, p2, p3, p4, p5, 
+             ncol = 2, nrow = 3)
+
+
+
+## visualize
+data.vis <- data %>% 
+  mutate(
+    Mathe = as.ordered(Mathe),
+    Programmieren = as.ordered(Programmieren),
+  ) %>% 
+  select(
+    c(Studienfach, Mathe, Programmieren, MatheLK)
+  )
+
+
+levels(data.vis$MatheLK) = c("Mathe-LK", "kein Mathe-LK")
+data.vis %>% 
+  visualize_categorical(id.1 = "Studienfach", id.2 = "MatheLK",
+                        title = "Interessen nach Studienfach und Mathe-LK",
+                        x.title = "Interesse", y.title = "Anzahl" 
+  )
+
+data.vis %>%
+  select(Studienfach, Mathe, Programmieren) %>% 
+  visualize_categorical(id.1 = "Studienfach",
+                        title = "Interessen nach Studienfach",
+                        x.title = "Interesse", y.title = "Anzahl" 
+  )
+
+
 
 # Ausführen der Funktionen
 
