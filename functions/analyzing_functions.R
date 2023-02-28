@@ -16,7 +16,8 @@ library(docstring)
 #     
 # )
 
-
+# (e) Eine Funktion, die eine mindestens ordinal skalierte Variable
+# quantilbasiert kategorisiert (z.B. in „niedrig“, „mittel“, „hoch“)
 categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
     #' categorize ordinal variables based on quantiles
     #'
@@ -67,7 +68,8 @@ categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
 # categorize_ordinal(test.data, c('one', 'two'))
 
 
-
+# (a) Eine Funktion, die verschiedene geeignete deskriptive Statistiken
+# für metrische Variablen berechnet und ausgibt
 stats_metric <- function (data) {
   #' calculate descriptive statistics for metric variables
   #'
@@ -89,7 +91,8 @@ stats_metric <- function (data) {
 #   stats_metric()
 
 
-
+# (b) Eine Funktion, die verschiedene geeignete deskriptive Statistiken
+# für kategoriale Variablen berechnet und ausgibt
 stats_categorical <- function (X) {
   #' calculate descriptive statistics for metric variables
   #'
@@ -253,6 +256,11 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
 #data(mtcars)
 #bivariate_stats_categorical(mtcars, "cyl", "vs")
 
+
+
+# (d) Eine Funktion, die geeignete deskriptive bivariate Statistiken für
+# den Zusammengang zwischen einer metrischen und einer
+# dichotomen Variablen berechnet und ausgibt
 stats_bivariate_metric_dichotom <- function(metric_var, dichotomous_var){
   #' @param metric_var metrischer Vektor
   #' @param dichotomous_var dichotomer Vektor
@@ -286,6 +294,8 @@ stats_bivariate_metric_dichotom <- function(metric_var, dichotomous_var){
 library(reshape2)
 library(ggplot2)
 
+# (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier
+# kategorialen Variablen erstellt
 visualize_categorical <- function(data, id.1, id.2 = NULL,
                                   title = NULL, x.title = NULL,
                                   y.title = NULL, legend.title = NULL) {
