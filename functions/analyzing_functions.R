@@ -16,56 +16,6 @@ library(docstring)
 #     
 # )
 
-# (e) Eine Funktion, die eine mindestens ordinal skalierte Variable
-# quantilbasiert kategorisiert (z.B. in „niedrig“, „mittel“, „hoch“)
-categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
-    #' categorize ordinal variables based on quantiles
-    #'
-    #' @param data data.frame
-    #' @param by int/string/vector - mindestens ordinale Variable(n) des Datensatzes, nach denen kategorisiert werden soll
-    #' @param bins int - Anzahl der Kategorien
-    #' @param in_place bool - Wenn TRUE werden die Originalwerte der Variable(n) mit den errechneten Kategorien Ã¼berschrieben
-
-    # exceptions
-    if (!any(class(data) == 'data.frame')) {
-        stop('data should be a data.frame')
-    }
-
-    if (bins <= 0) {
-        stop('bins has to be a positive integer')
-    }
-
-    # functionality
-    if (in_place == TRUE && bins == 3) {
-        return(mutate(data, across(by,
-                                   ~ recode(ntile(.x, bins),
-                                            '1' = 'low',
-                                            '2' = 'medium',
-                                            '3' = 'high'))))
-    }
-
-    if (in_place == TRUE && bins != 3) {
-        return(mutate(data, across(by,
-                                   ~ ntile(.x, bins))))
-    }
-
-    if (bins == 3) {
-        return(mutate(data, across(by,
-                            ~ recode(ntile(.x, bins),
-                                     '1' = 'low',
-                                     '2' = 'medium',
-                                     '3' = 'high'),
-                            .names = 'category_{.col}')))
-    }
-
-    return(mutate(data, across(by,
-                        ~ ntile(.x, bins),
-                        .names = 'category_{.col}')))
-}
-
-## usage example
-# categorize_ordinal(test.data, c(1,3), bins=5)
-# categorize_ordinal(test.data, c('one', 'two'))
 
 
 # (a) Eine Funktion, die verschiedene geeignete deskriptive Statistiken
@@ -289,6 +239,60 @@ stats_bivariate_metric_dichotom <- function(metric_var, dichotomous_var){
 
 ## Usage example:
 # stats_bivariate_metric_dichotom(test.data$three, test.data$seven)
+
+
+
+
+# (e) Eine Funktion, die eine mindestens ordinal skalierte Variable
+# quantilbasiert kategorisiert (z.B. in „niedrig“, „mittel“, „hoch“)
+categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
+    #' categorize ordinal variables based on quantiles
+    #'
+    #' @param data data.frame
+    #' @param by int/string/vector - mindestens ordinale Variable(n) des Datensatzes, nach denen kategorisiert werden soll
+    #' @param bins int - Anzahl der Kategorien
+    #' @param in_place bool - Wenn TRUE werden die Originalwerte der Variable(n) mit den errechneten Kategorien Ã¼berschrieben
+
+    # exceptions
+    if (!any(class(data) == 'data.frame')) {
+        stop('data should be a data.frame')
+    }
+
+    if (bins <= 0) {
+        stop('bins has to be a positive integer')
+    }
+
+    # functionality
+    if (in_place == TRUE && bins == 3) {
+        return(mutate(data, across(by,
+                                   ~ recode(ntile(.x, bins),
+                                            '1' = 'low',
+                                            '2' = 'medium',
+                                            '3' = 'high'))))
+    }
+
+    if (in_place == TRUE && bins != 3) {
+        return(mutate(data, across(by,
+                                   ~ ntile(.x, bins))))
+    }
+
+    if (bins == 3) {
+        return(mutate(data, across(by,
+                            ~ recode(ntile(.x, bins),
+                                     '1' = 'low',
+                                     '2' = 'medium',
+                                     '3' = 'high'),
+                            .names = 'category_{.col}')))
+    }
+
+    return(mutate(data, across(by,
+                        ~ ntile(.x, bins),
+                        .names = 'category_{.col}')))
+}
+
+## usage example
+# categorize_ordinal(test.data, c(1,3), bins=5)
+# categorize_ordinal(test.data, c('one', 'two'))
 
 
 library(reshape2)
