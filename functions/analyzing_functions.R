@@ -4,70 +4,22 @@ library(tidyverse)
 library(docstring)
 
 
-test.data <- data.frame(
-
-    "one" = rnorm(10),
-    "two" = rnorm(10, 50, 2),
-    "three" = rnorm(10, 10, 7),
-    "four" = as.ordered(sample(1:5, size = 10, replace = T)),
-    "five" = as.ordered(sample(1:5, size = 10, replace = T)),
-    "six" = as.factor(sample(c("A", "B", "C", "D"), size = 10, replace = T)),
-    "seven" = as.factor(sample(c("y", "n"), size = 10, replace = T))
-    
-)
-
-
-categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
-    #' categorize ordinal variables based on quantiles
-    #'
-    #' @param data data.frame
-    #' @param by int/string/vector - mindestens ordinale Variable(n) des Datensatzes, nach denen kategorisiert werden soll
-    #' @param bins int - Anzahl der Kategorien
-    #' @param in_place bool - Wenn TRUE werden die Originalwerte der Variable(n) mit den errechneten Kategorien Ã¼berschrieben
-
-    # exceptions
-    if (!any(class(data) == 'data.frame')) {
-        stop('data should be a data.frame')
-    }
-
-    if (bins <= 0) {
-        stop('bins has to be a positive integer')
-    }
-
-    # functionality
-    if (in_place == TRUE && bins == 3) {
-        return(mutate(data, across(by,
-                                   ~ recode(ntile(.x, bins),
-                                            '1' = 'low',
-                                            '2' = 'medium',
-                                            '3' = 'high'))))
-    }
-
-    if (in_place == TRUE && bins != 3) {
-        return(mutate(data, across(by,
-                                   ~ ntile(.x, bins))))
-    }
-
-    if (bins == 3) {
-        return(mutate(data, across(by,
-                            ~ recode(ntile(.x, bins),
-                                     '1' = 'low',
-                                     '2' = 'medium',
-                                     '3' = 'high'),
-                            .names = 'category_{.col}')))
-    }
-
-    return(mutate(data, across(by,
-                        ~ ntile(.x, bins),
-                        .names = 'category_{.col}')))
-}
-
-## usage example
-# categorize_ordinal(test.data, c(1,3), bins=5)
-# categorize_ordinal(test.data, c('one', 'two'))
+# test.data <- data.frame(
+# 
+#     "one" = rnorm(10),
+#     "two" = rnorm(10, 50, 2),
+#     "three" = rnorm(10, 10, 7),
+#     "four" = as.ordered(sample(1:5, size = 10, replace = T)),
+#     "five" = as.ordered(sample(1:5, size = 10, replace = T)),
+#     "six" = as.factor(sample(c("A", "B", "C", "D"), size = 10, replace = T)),
+#     "seven" = as.factor(sample(c("y", "n"), size = 10, replace = T))
+#     
+# )
 
 
 
+# (a) Eine Funktion, die verschiedene geeignete deskriptive Statistiken
+# für metrische Variablen berechnet und ausgibt
 stats_metric <- function (data) {
   #' calculate descriptive statistics for metric variables
   #'
@@ -84,12 +36,13 @@ stats_metric <- function (data) {
 }
 
 ## example
-test.data %>% 
-  select(c("one", "three")) %>% 
-  stats_metric()
+# test.data %>% 
+#   select(c("one", "three")) %>% 
+#   stats_metric()
 
 
-
+# (b) Eine Funktion, die verschiedene geeignete deskriptive Statistiken
+# für kategoriale Variablen berechnet und ausgibt
 stats_categorical <- function (X) {
   #' calculate descriptive statistics for metric variables
   #'
@@ -233,9 +186,9 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
 }
 
 
-?bivariate_stats_categorical
-?bivariate_stats_categorical()
-docstring(bivariate_stats_categorical)
+#?bivariate_stats_categorical
+#?bivariate_stats_categorical()
+#docstring(bivariate_stats_categorical)
 
 
 ## Deskriptive bivariate Statistiken für zwei kategoriale Variablen
@@ -250,9 +203,14 @@ docstring(bivariate_stats_categorical)
 # bivariate_stats_categorical(biv_data, 'x', 'y')
 
 # Für row_- und col_percents addieren die ProzentsÃ¤tze nicht zu 100
-data(mtcars)
-bivariate_stats_categorical(mtcars, "cyl", "vs")
+#data(mtcars)
+#bivariate_stats_categorical(mtcars, "cyl", "vs")
 
+
+
+# (d) Eine Funktion, die geeignete deskriptive bivariate Statistiken für
+# den Zusammengang zwischen einer metrischen und einer
+# dichotomen Variablen berechnet und ausgibt
 stats_bivariate_metric_dichotom <- function(metric_var, dichotomous_var){
   #' @param metric_var metrischer Vektor
   #' @param dichotomous_var dichotomer Vektor
@@ -283,9 +241,65 @@ stats_bivariate_metric_dichotom <- function(metric_var, dichotomous_var){
 # stats_bivariate_metric_dichotom(test.data$three, test.data$seven)
 
 
+
+
+# (e) Eine Funktion, die eine mindestens ordinal skalierte Variable
+# quantilbasiert kategorisiert (z.B. in „niedrig“, „mittel“, „hoch“)
+categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
+    #' categorize ordinal variables based on quantiles
+    #'
+    #' @param data data.frame
+    #' @param by int/string/vector - mindestens ordinale Variable(n) des Datensatzes, nach denen kategorisiert werden soll
+    #' @param bins int - Anzahl der Kategorien
+    #' @param in_place bool - Wenn TRUE werden die Originalwerte der Variable(n) mit den errechneten Kategorien Ã¼berschrieben
+
+    # exceptions
+    if (!any(class(data) == 'data.frame')) {
+        stop('data should be a data.frame')
+    }
+
+    if (bins <= 0) {
+        stop('bins has to be a positive integer')
+    }
+
+    # functionality
+    if (in_place == TRUE && bins == 3) {
+        return(mutate(data, across(by,
+                                   ~ recode(ntile(.x, bins),
+                                            '1' = 'low',
+                                            '2' = 'medium',
+                                            '3' = 'high'))))
+    }
+
+    if (in_place == TRUE && bins != 3) {
+        return(mutate(data, across(by,
+                                   ~ ntile(.x, bins))))
+    }
+
+    if (bins == 3) {
+        return(mutate(data, across(by,
+                            ~ recode(ntile(.x, bins),
+                                     '1' = 'low',
+                                     '2' = 'medium',
+                                     '3' = 'high'),
+                            .names = 'category_{.col}')))
+    }
+
+    return(mutate(data, across(by,
+                        ~ ntile(.x, bins),
+                        .names = 'category_{.col}')))
+}
+
+## usage example
+# categorize_ordinal(test.data, c(1,3), bins=5)
+# categorize_ordinal(test.data, c('one', 'two'))
+
+
 library(reshape2)
 library(ggplot2)
 
+# (f) Eine Funktion, die eine geeignete Visualisierung von drei oder vier
+# kategorialen Variablen erstellt
 visualize_categorical <- function(data, id.1, id.2 = NULL,
                                   title = NULL, x.title = NULL,
                                   y.title = NULL, legend.title = NULL) {
@@ -323,14 +337,14 @@ visualize_categorical <- function(data, id.1, id.2 = NULL,
 }
 # docstring(visualize_categorical)
 
-## example: four variables
-test.data %>% 
-  select(c("six", "four", "five", "seven")) %>% 
-  visualize_categorical(id.1 = "six", id.2 = "seven",
-                        title = "Barplot", x.title = "Interesse", y.title = "Anzahl",
-                        legend.title = "Faktor")
-
-## example: three variables
-test.data %>% 
-  select(c("six", "four", "five")) %>% 
-  visualize_categorical(id.1 = "six")
+# ## example: four variables
+# test.data %>%
+#   select(c("six", "four", "five", "seven")) %>%
+#   visualize_categorical(id.1 = "six", id.2 = "seven",
+#                         title = "Barplot", x.title = "Interesse", y.title = "Anzahl",
+#                         legend.title = "Faktor")
+# 
+# ## example: three variables
+# test.data %>%
+#   select(c("six", "four", "five")) %>%
+#   visualize_categorical(id.1 = "six")
