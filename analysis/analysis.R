@@ -128,7 +128,4 @@ categorize_ordinal(data, by = 'Programmieren', bins = 3, in_place=TRUE) %>%
 # Eher ein gegenteiliger Effekt ist zu vermerken. Vermutlich wählen die Personen dann eher Data Science?
 
 
-## Visualisierung kategorialer Variablen
-
-# TODO
 
