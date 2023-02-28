@@ -90,7 +90,7 @@ stats_categorical <- function (X) {
   Xtable$NormEntropie <- Xentropy
   # Berechnung der normierten Entropie der einzelnen Faktoren
   
-  Xtable$AnzahlNA <- length(which(is.na(test.data) == TRUE))
+  Xtable$AnzahlNA <- length(which(is.na(data) == TRUE))
   # Anzahl der fehlenden Werte im gesamten Data Frame
   
   return(Xtable)
