@@ -78,8 +78,8 @@ prog.interesse <- interesse(pobStat = c(.03, .05, .12, .25, .35, .15, .05),
 #### Mathe LK ####
 ## 
 ## Die Funktion  interesseMLK erhoeht die Wahrscheinlichkeit fuer "ja"
-## um 0.1 falls das Interesse der Person groesser 4 ist und um 0.5 falls
-## das Interesse an Programmieren groesser 4 ist.
+## um 10% falls das Mathe Interesse der Person groesser 4 ist und um 
+## 5% falls das Interesse an Programmieren groesser 4 ist.
 ## Die Wahrscheinlichkeit fuer "nein" ist die Gegenwahrscheinlichkeit 
 ## von "ja".
 ##
