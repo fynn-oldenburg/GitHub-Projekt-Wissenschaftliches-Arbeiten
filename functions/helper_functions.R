@@ -22,6 +22,12 @@ stats_metric.inner <- function(x) {
   return(result)
 }
 
+# ?stats_metric.inner
+# ?stats_metric.inner()
+# docstring(stats_metric.inner)
+
+# stats_metric.inner(c(1, 2, 3, 4, 5))
+
 
 bivariate_stats_categorical.cramer_v <- function(contingency_table, n, rows, cols) {
   #' calculate cramer's v
