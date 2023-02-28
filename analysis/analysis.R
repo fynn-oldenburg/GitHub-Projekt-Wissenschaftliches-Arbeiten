@@ -17,12 +17,19 @@ data <- read.csv("students-data.csv") %>%
 str(data)
 apply(data, 2, table)
 
+
+## Ein großer Teil der Personen studiert Statistik, 
+## ein besonders geringer Teil der Personen studiert Mathe
+
+## Ein Großteil (70%) der Befragten hat einen Mathe-Leistungskurs belegt
+
 ## Ausführen der stats_metric-function für einen Überblick
 data %>% 
   mutate(Programmieren = as.numeric(Programmieren),
          Mathe = as.numeric(Mathe)) %>% 
   select(Alter, Mathe, Programmieren) %>% 
   stats_metric()
+
 
 
 
@@ -84,9 +91,13 @@ dev.off()
 # Ausführen der Funktionen
 
 
+
+
 ## Kategoriale Variablen
 
 stats_categorical(data)
+
+
 
 ## bivariate Statistiken für zwei kategoriale Variablen
 
@@ -95,11 +106,22 @@ bivariate_stats_categorical(data, "Studienfach", "Programmieren")
 bivariate_stats_categorical(data, "Studienfach", "MatheLK")
 bivariate_stats_categorical(data, "Mathe", "Programmieren")
 bivariate_stats_categorical(data, "Mathe", "MatheLK")
+
+# Ein Cramer's V von über 0.7 spricht für einen starken Zusammenhang 
+# von dem Interesse an Mathe und der Wahl für oder gegen den Mathe-Leistungskurs
+
+
 bivariate_stats_categorical(data, "Programmieren", "MatheLK")
+
+
 
 ## bivariate Statistiken für eine metrische und eine kategoriale Variable
 
 stats_bivariate_metric_dichotom(data$Alter, data$MatheLK)
+# Zwischen Alter und Mathe-LK ist kein gro?er Unterschied zwischen den Gruppen
+# "ja" und "nein", also kein Zusammenhang erkennbar (was auch der 
+# Aufgabenstellung entspricht)
+
 
 ## Kategorisierung ordinaler Variablen
 
@@ -130,7 +152,4 @@ categorize_ordinal(data, by = 'Programmieren', bins = 3, in_place=TRUE) %>%
 # Eher ein gegenteiliger Effekt ist zu vermerken. Vermutlich wählen die Personen dann eher Data Science?
 
 
-## Visualisierung kategorialer Variablen
-
-# TODO
 
