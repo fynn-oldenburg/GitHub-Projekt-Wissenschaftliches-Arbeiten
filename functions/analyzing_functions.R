@@ -321,7 +321,7 @@ visualize_categorical <- function(data, id.1, id.2 = NULL,
   p + labs(title = title, x = x.title, y = y.title, fill = legend.title)
   
 }
-# ?visualize_categorical
+# docstring(visualize_categorical)
 
 ## example: four variables
 test.data %>% 
@@ -329,13 +329,6 @@ test.data %>%
   visualize_categorical(id.1 = "six", id.2 = "seven",
                         title = "Barplot", x.title = "Interesse", y.title = "Anzahl",
                         legend.title = "Faktor")
-## example: four variables
-test.data %>% 
-  select(c("six", "four", "five", "seven")) %>% 
-  visualize_categorical(id.1 = "six",
-                        title = "Barplot", x.title = "Interesse / Mathe LK", y.title = "Anzahl",
-                        legend.title = "Faktor")
-
 
 ## example: three variables
 test.data %>% 
