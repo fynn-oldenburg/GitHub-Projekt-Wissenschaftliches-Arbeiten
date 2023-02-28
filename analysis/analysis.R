@@ -17,12 +17,12 @@ stats_categorical(data)
 
 ## bivariate Statistiken für zwei kategoriale Variablen
 
-bivariate_stats_categorical(data, data$Studienfach, data$Mathe)
-bivariate_stats_categorical(data, data$Studienfach, data$Programmieren)
-bivariate_stats_categorical(data, data$Studienfach, data$MatheLK)
-bivariate_stats_categorical(data, data$Mathe, data$Programmieren)
-bivariate_stats_categorical(data, data$Mathe, data$MatheLK)
-bivariate_stats_categorical(data, data$Programmieren, data$MatheLK)
+bivariate_stats_categorical(data, "Studienfach", "Mathe")
+bivariate_stats_categorical(data, "Studienfach", "Programmieren")
+bivariate_stats_categorical(data, "Studienfach", "MatheLK")
+bivariate_stats_categorical(data, "Mathe", "Programmieren")
+bivariate_stats_categorical(data, "Mathe", "MatheLK")
+bivariate_stats_categorical(data, "Programmieren", "MatheLK")
 
 ## bivariate Statistiken für eine metrische und eine kategoriale Variable
 
