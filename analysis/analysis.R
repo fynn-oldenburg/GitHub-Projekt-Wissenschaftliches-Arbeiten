@@ -64,7 +64,7 @@ p2 <- data.vis %>%
                         x.title = "Interesse", y.title = "Anzahl" 
   )
 
-pdf("analysis/data-overview.pdf")
+pdf("analysis/Interessen-Uebersicht.pdf")
 print(p1)
 print(p2)
 dev.off()
