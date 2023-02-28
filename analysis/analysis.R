@@ -7,9 +7,10 @@ suppressWarnings(source("functions/helper_functions.R"))
 suppressWarnings(source("functions/analyzing_functions.R"))
 
 ## data import
-data <- read.csv("students-data.csv") %>% 
-  mutate(MatheLK = as.factor(MatheLK))
-
+data <- read.csv("students-data.csv") %>%
+    mutate(MatheLK = as.factor (MatheLK),
+           Programmieren = as.ordered(Programmieren),
+           Mathe = as.ordered(Mathe))
 
 ## first look
 str(data)
