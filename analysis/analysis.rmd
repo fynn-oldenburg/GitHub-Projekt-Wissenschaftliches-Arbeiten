@@ -1,0 +1,46 @@
+---
+title: "Analyse"
+output: pdf_document
+---
+
+```{r}
+source("functions/helper_functions.R")
+source("functions/analyzing_functions.R")
+```
+
+# Einlesen der Datei
+
+```{r}
+data <- read.csv("students-data.csv")
+```
+
+# Ausführen der Funktionen
+
+## Metrische Variablen
+
+```{r}
+stats_metric(data.frame(data$Alter, data$Mathe, data$Programmieren))
+```
+
+## Kategoriale Variablen
+
+```{r}
+stats_categorical(data)
+```
+
+## bivariate Statistiken für zwei kategoriale Variablen
+
+```{r}
+bivariate_stats_categorical(data, data$Studienfach, data$Mathe)
+bivariate_stats_categorical(data, data$Studienfach, data$Programmieren)
+bivariate_stats_categorical(data, data$Studienfach, data$MatheLK)
+bivariate_stats_categorical(data, data$Mathe, data$Programmieren)
+bivariate_stats_categorical(data, data$Mathe, data$MatheLK)
+bivariate_stats_categorical(data, data$Programmieren, data$MatheLK)
+```
+
+## bivariate Statistiken für eine metrische und eine kategoriale Variable
+
+```{r}
+stats_bivariate_metric_dichotom(data$Alter, data$MatheLK)
+```
