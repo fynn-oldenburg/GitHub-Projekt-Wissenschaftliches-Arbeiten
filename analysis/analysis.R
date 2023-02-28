@@ -72,9 +72,13 @@ data.vis %>%
 
 stats_metric(data.frame(data$Alter, data$Mathe, data$Programmieren))
 
+
+
 ## Kategoriale Variablen
 
 stats_categorical(data)
+
+
 
 ## bivariate Statistiken für zwei kategoriale Variablen
 
@@ -85,9 +89,15 @@ bivariate_stats_categorical(data, "Mathe", "Programmieren")
 bivariate_stats_categorical(data, "Mathe", "MatheLK")
 bivariate_stats_categorical(data, "Programmieren", "MatheLK")
 
+# Ein Cramer's V von über 0.7 spricht für einen starken Zusammenhang 
+# von dem Interesse an Mathe und der Wahl für oder gegen den Mathe-Leistungskurs
+
+
 ## bivariate Statistiken für eine metrische und eine kategoriale Variable
 
 stats_bivariate_metric_dichotom(data$Alter, data$MatheLK)
+
+
 
 ## Kategorisierung ordinaler Variablen
 
