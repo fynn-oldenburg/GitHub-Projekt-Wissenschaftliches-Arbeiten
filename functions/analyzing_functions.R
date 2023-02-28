@@ -250,8 +250,8 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
 # bivariate_stats_categorical(biv_data, 'x', 'y')
 
 # Für row_- und col_percents addieren die ProzentsÃ¤tze nicht zu 100
-data(mtcars)
-bivariate_stats_categorical(mtcars, "cyl", "vs")
+#data(mtcars)
+#bivariate_stats_categorical(mtcars, "cyl", "vs")
 
 stats_bivariate_metric_dichotom <- function(metric_var, dichotomous_var){
   #' @param metric_var metrischer Vektor
