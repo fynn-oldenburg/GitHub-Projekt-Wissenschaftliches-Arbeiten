@@ -19,9 +19,7 @@ Gruppenmitglieder:
 - Aufgabe 3: 
   - [Funktionen](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/functions/analyzing_functions.R)
   - [Hilfsfunktionen](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/functions/helper_functions.R)
-- Aufgabe 4: Anlyse
-  - [rmd-Datei](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/analysis/analysis.rmd)
-  - [pdf-Datei](link einfügen)
+- Aufgabe 4: [Anlyse](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/analysis/analysis.R)
 - Aufgabe 5 [Diskussion](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/issues/65)
 
 
