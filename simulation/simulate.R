@@ -130,7 +130,7 @@ for (i in 1:n){
 #### Die fertigen Daten ####
 ##
 ## Data frame mit den oben genrierten Daten und ID-Spalte,
-## exportiert als csv-file mit dem der Bezeichnung "students-data.csv"
+## exportiert als csv-file mit der Bezeichnung "students-data.csv"
 ##
 data.frame(
   
