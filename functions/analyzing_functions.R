@@ -4,17 +4,17 @@ library(tidyverse)
 library(docstring)
 
 
-test.data <- data.frame(
-
-    "one" = rnorm(10),
-    "two" = rnorm(10, 50, 2),
-    "three" = rnorm(10, 10, 7),
-    "four" = as.ordered(sample(1:5, size = 10, replace = T)),
-    "five" = as.ordered(sample(1:5, size = 10, replace = T)),
-    "six" = as.factor(sample(c("A", "B", "C", "D"), size = 10, replace = T)),
-    "seven" = as.factor(sample(c("y", "n"), size = 10, replace = T))
-    
-)
+# test.data <- data.frame(
+# 
+#     "one" = rnorm(10),
+#     "two" = rnorm(10, 50, 2),
+#     "three" = rnorm(10, 10, 7),
+#     "four" = as.ordered(sample(1:5, size = 10, replace = T)),
+#     "five" = as.ordered(sample(1:5, size = 10, replace = T)),
+#     "six" = as.factor(sample(c("A", "B", "C", "D"), size = 10, replace = T)),
+#     "seven" = as.factor(sample(c("y", "n"), size = 10, replace = T))
+#     
+# )
 
 
 categorize_ordinal <- function (data, by=1, bins=3, in_place=FALSE) {
