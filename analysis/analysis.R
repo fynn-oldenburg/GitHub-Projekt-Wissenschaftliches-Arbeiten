@@ -16,6 +16,11 @@ data <- read.csv("students-data.csv") %>%
 str(data)
 apply(data, 2, table)
 
+## Ein großer Teil der Personen studiert Statistik, 
+## ein besonders geringer Teil der Personen studiert Mathe
+
+## Ein Großteil (70%) der Befragten hat einen Mathe-Leistungskurs belegt
+
 
 ## all individually
 p1 <- data %>% 
