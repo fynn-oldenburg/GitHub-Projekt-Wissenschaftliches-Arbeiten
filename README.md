@@ -36,7 +36,7 @@ Im folgenden sind die Wahrscheinlichkeiten aufgeführt, die wir für die samples
 Alter von Person $i := \lfloor x_i \rfloor \ ,$  wobei $x_i \sim \mathcal{N}(25, 2), \ i = 1, ..., 100$
 
 
-## Studienfach
+### Studienfach
               
 |Studienfach   | Wahrscheinlichkeit |
 |--------------|--------------------|
