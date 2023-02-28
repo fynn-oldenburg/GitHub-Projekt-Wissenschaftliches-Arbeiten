@@ -53,7 +53,7 @@ Alter von Person $i := \lfloor x_i \rfloor \ ,$  wobei $x_i \sim \mathcal{N}(25,
 |              | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 
 |--------------|------|------|------|------|------|------|------|
 |Statistik     | 1 %  | 5 %  | 9 %  | 15 % | 20 % | 30 % | 20 % |
-|Datat Science | 5 %  | 10 % | 15 % | 25 % | 25 % | 10 % | 10 % |
+|Data Science  | 5 %  | 10 % | 15 % | 25 % | 25 % | 10 % | 10 % |
 |Mathematik    | 0 %  | 0 %  | 0 %  |  2 % | 18 % | 30 % | 50 % |
 |Informatik    | 5 %  | 5 %  | 20 % | 20 % | 30 % | 10 % | 10 % |
 
@@ -63,7 +63,7 @@ Alter von Person $i := \lfloor x_i \rfloor \ ,$  wobei $x_i \sim \mathcal{N}(25,
 |              | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 
 |--------------|------|------|------|------|------|------|------|
 |Statistik     | 3 %  | 5 %  | 12 % | 25 % | 35 % | 15 % |  5 % |
-|Datat Science | 1 %  | 2 %  |  5 % | 10 % | 30 % | 32 % | 20 % |
+|Data Science  | 1 %  | 2 %  |  5 % | 10 % | 30 % | 32 % | 20 % |
 |Mathematik    | 5 %  | 5 %  | 20 % | 30 % | 20 % | 15 % |  5 % |
 |Informatik    | 1 %  | 1 %  |  5 % | 13 % | 20 % | 30 % | 30 % |
 
@@ -75,7 +75,7 @@ Sample-Wahrscheinlichkeiten für _"ja"_
 |              | Basis-W'keit | Mathe-Interesse > 4 | Prog.-Interesse > 4 | max gesamt |
 |--------------|--------------|---------------------|---------------------|------------|
 |Statistik     |55 %          |+ 10 %               |+ 5 %                | 75 %       |
-|Datat Science |50 %          |+ 10 %               |+ 5 %                | 65 %       |
+|Data Science  |50 %          |+ 10 %               |+ 5 %                | 65 %       |
 |Mathematik    |70 %          |+ 10 %               |+ 5 %                | 85 %       |
 |Informatik    |50 %          |+ 10 %               |+ 5 %                | 65 %       |
 
