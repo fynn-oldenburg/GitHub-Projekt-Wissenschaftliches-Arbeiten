@@ -16,9 +16,12 @@ Gruppenmitglieder:
 
 - Aufgabe 1: [Simulation der Daten](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/simulation/simulate.R)
 - Aufgabe 2: [csv-Datei der Daten](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/students-data.csv)
-- Aufgabe 3: [Funktionen](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/functions/analyzing_functions.R)
-  - [Hilfsfunktionen][https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/functions/helper_functions.R]
+- Aufgabe 3: 
+  - [Funktionen](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/functions/analyzing_functions.R)
+  - [Hilfsfunktionen](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/functions/helper_functions.R)
 - Aufgabe 4: Anlyse
+  - [rmd-Datei](link einfügen)
+  - [pdf-Datei](link einfügen)
 - Aufgabe 5 [Diskussion](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/issues/65)
 
 
