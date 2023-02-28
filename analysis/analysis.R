@@ -51,18 +51,23 @@ data.vis <- data %>%
 
 
 levels(data.vis$MatheLK) = c("Mathe-LK", "kein Mathe-LK")
-data.vis %>% 
+p1 <- data.vis %>% 
   visualize_categorical(id.1 = "Studienfach", id.2 = "MatheLK",
                         title = "Interessen nach Studienfach und Mathe-LK",
                         x.title = "Interesse", y.title = "Anzahl" 
   )
 
-data.vis %>%
+p2 <- data.vis %>%
   select(Studienfach, Mathe, Programmieren) %>% 
   visualize_categorical(id.1 = "Studienfach",
                         title = "Interessen nach Studienfach",
                         x.title = "Interesse", y.title = "Anzahl" 
   )
+
+pdf("analysis/data-overview.pdf")
+print(p1)
+print(p2)
+dev.off()
 
 
 
