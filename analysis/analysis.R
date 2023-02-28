@@ -87,16 +87,19 @@ bivariate_stats_categorical(data, "Studienfach", "Programmieren")
 bivariate_stats_categorical(data, "Studienfach", "MatheLK")
 bivariate_stats_categorical(data, "Mathe", "Programmieren")
 bivariate_stats_categorical(data, "Mathe", "MatheLK")
-bivariate_stats_categorical(data, "Programmieren", "MatheLK")
 
 # Ein Cramer's V von über 0.7 spricht für einen starken Zusammenhang 
 # von dem Interesse an Mathe und der Wahl für oder gegen den Mathe-Leistungskurs
 
 
+bivariate_stats_categorical(data, "Programmieren", "MatheLK")
+
+
+
 ## bivariate Statistiken für eine metrische und eine kategoriale Variable
 
 stats_bivariate_metric_dichotom(data$Alter, data$MatheLK)
-# Zwischen Alter und Mathe-LK ist kein gro�er Unterschied zwischen den Gruppen
+# Zwischen Alter und Mathe-LK ist kein gro?er Unterschied zwischen den Gruppen
 # "ja" und "nein", also kein Zusammenhang erkennbar (was auch der 
 # Aufgabenstellung entspricht)
 
