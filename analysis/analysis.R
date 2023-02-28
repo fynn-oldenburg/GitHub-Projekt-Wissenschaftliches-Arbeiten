@@ -12,14 +12,26 @@ data <- read.csv("students-data.csv") %>%
            Programmieren = as.ordered(Programmieren),
            Mathe = as.ordered(Mathe))
 
-## first look
+
+## first look 
 str(data)
 apply(data, 2, table)
+
 
 ## Ein großer Teil der Personen studiert Statistik, 
 ## ein besonders geringer Teil der Personen studiert Mathe
 
 ## Ein Großteil (70%) der Befragten hat einen Mathe-Leistungskurs belegt
+
+## Ausführen der stats_metric-function für einen Überblick
+data %>% 
+  mutate(Programmieren = as.numeric(Programmieren),
+         Mathe = as.numeric(Mathe)) %>% 
+  select(Alter, Mathe, Programmieren) %>% 
+  stats_metric()
+
+
+
 
 
 ## all individually
@@ -56,26 +68,28 @@ data.vis <- data %>%
 
 
 levels(data.vis$MatheLK) = c("Mathe-LK", "kein Mathe-LK")
-data.vis %>% 
+p1 <- data.vis %>% 
   visualize_categorical(id.1 = "Studienfach", id.2 = "MatheLK",
                         title = "Interessen nach Studienfach und Mathe-LK",
                         x.title = "Interesse", y.title = "Anzahl" 
   )
 
-data.vis %>%
+p2 <- data.vis %>%
   select(Studienfach, Mathe, Programmieren) %>% 
   visualize_categorical(id.1 = "Studienfach",
                         title = "Interessen nach Studienfach",
                         x.title = "Interesse", y.title = "Anzahl" 
   )
 
+pdf("analysis/Interessen-Uebersicht.pdf")
+print(p1)
+print(p2)
+dev.off()
+
 
 
 # Ausführen der Funktionen
 
-## Metrische Variablen
-
-stats_metric(data.frame(data$Alter, data$Mathe, data$Programmieren))
 
 
 
