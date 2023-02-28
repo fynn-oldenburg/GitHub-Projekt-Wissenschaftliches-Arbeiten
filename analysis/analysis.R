@@ -3,8 +3,8 @@ library(ggplot2)
 library(gridExtra)
 library(reshape2)
 
-suppressWarnings(source("functions/helper_functions.R"))
-suppressWarnings(source("functions/analyzing_functions.R"))
+source("functions/helper_functions.R")
+source("functions/analyzing_functions.R")
 
 ## data import
 data <- read.csv("students-data.csv") %>%
@@ -91,7 +91,32 @@ stats_bivariate_metric_dichotom(data$Alter, data$MatheLK)
 
 ## Kategorisierung ordinaler Variablen
 
-categorize_ordinal(data, by = c(2, 4, 5), bins = 3)
+categorize_ordinal(data, by = 'Mathe', bins = 3, in_place=TRUE) %>%
+    group_by(Mathe) %>%
+    summarize(n = sum(MatheLK == 'ja'))
+# Wenn niedriges Interesse an Mathe vorliegt, dann wird eher nicht der MatheLK gewählt
+
+categorize_ordinal(data, by = 'Mathe', bins = 3, in_place=TRUE) %>%
+    group_by(Mathe) %>%
+    summarize(n = sum(Studienfach == 'Mathe'))
+# Wenn niedriges Interesse an Mathe vorliegt, dann wird gar nicht das Studienfach Mathe gewählt?
+
+categorize_ordinal(data, by = 'Programmieren', bins = 3, in_place=TRUE) %>%
+    group_by(Programmieren) %>%
+    summarize(n = sum(Studienfach == 'Informatik'))
+# bei höherem Interesse am Programmieren wird eher der Studiengang Informatik gewählt
+
+categorize_ordinal(data, by = 'Programmieren', bins = 3, in_place=TRUE) %>%
+    group_by(Programmieren) %>%
+    summarize(n = sum(Studienfach == 'Data Science'))
+# Interesse an Programmieren scheint einen positiven Einfluss auf die Wahl von Data Science als Studienfach zu haben.
+
+categorize_ordinal(data, by = 'Programmieren', bins = 3, in_place=TRUE) %>%
+    group_by(Programmieren) %>%
+    summarize(n = sum(Studienfach == 'Statistik'))
+# Interesse am Programmieren ist nicht ausschlaggebend für die Wahl des Statistik-Studiums.
+# Eher ein gegenteiliger Effekt ist zu vermerken. Vermutlich wählen die Personen dann eher Data Science?
+
 
 ## Visualisierung kategorialer Variablen
 
