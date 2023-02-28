@@ -233,7 +233,7 @@ bivariate_stats_categorical <- function(data, x_var, y_var) {
 }
 
 
-?bivariate_stats_categorical
+#?bivariate_stats_categorical
 ?bivariate_stats_categorical()
 docstring(bivariate_stats_categorical)
 
