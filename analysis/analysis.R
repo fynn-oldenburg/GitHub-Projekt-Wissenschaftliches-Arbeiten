@@ -12,9 +12,19 @@ data <- read.csv("students-data.csv") %>%
            Programmieren = as.ordered(Programmieren),
            Mathe = as.ordered(Mathe))
 
-## first look
+
+## first look 
 str(data)
 apply(data, 2, table)
+
+## Ausführen der stats_metric-function für einen Überblick
+data %>% 
+  mutate(Programmieren = as.numeric(Programmieren),
+         Mathe = as.numeric(Mathe)) %>% 
+  select(Alter, Mathe, Programmieren) %>% 
+  stats_metric()
+
+
 
 
 ## all individually
@@ -73,9 +83,6 @@ dev.off()
 
 # Ausführen der Funktionen
 
-## Metrische Variablen
-
-stats_metric(data.frame(data$Alter, data$Mathe, data$Programmieren))
 
 ## Kategoriale Variablen
 
