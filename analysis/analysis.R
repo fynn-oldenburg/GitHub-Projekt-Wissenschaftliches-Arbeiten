@@ -3,8 +3,8 @@ library(ggplot2)
 library(gridExtra)
 library(reshape2)
 
-suppressWarnings(source("functions/helper_functions.R"))
-suppressWarnings(source("functions/analyzing_functions.R"))
+source("functions/helper_functions.R")
+source("functions/analyzing_functions.R")
 
 ## data import
 data <- read.csv("students-data.csv") %>%
