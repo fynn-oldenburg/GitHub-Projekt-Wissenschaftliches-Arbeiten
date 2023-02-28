@@ -20,6 +20,7 @@ Gruppenmitglieder:
   - [Funktionen](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/functions/analyzing_functions.R)
   - [Hilfsfunktionen](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/functions/helper_functions.R)
 - Aufgabe 4: [Anlyse](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/analysis/analysis.R)
+  - [Grafik](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/blob/main/analysis/Interessen-Uebersicht.pdf)
 - Aufgabe 5 [Diskussion](https://github.com/fynn-oldenburg/GitHub-Projekt-Wissenschaftliches-Arbeiten/issues/65)
 
 
