@@ -96,7 +96,9 @@ bivariate_stats_categorical(data, "Programmieren", "MatheLK")
 ## bivariate Statistiken f√ºr eine metrische und eine kategoriale Variable
 
 stats_bivariate_metric_dichotom(data$Alter, data$MatheLK)
-
+# Zwischen Alter und Mathe-LK ist kein groﬂer Unterschied zwischen den Gruppen
+# "ja" und "nein", also kein Zusammenhang erkennbar (was auch der 
+# Aufgabenstellung entspricht)
 
 
 ## Kategorisierung ordinaler Variablen
